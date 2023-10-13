@@ -12,6 +12,9 @@ const config: Config = {
       height: {
         // screen: "100dvh",
       },
+      colors: {
+        primary: "#FD2F2F",
+      },
     },
   },
   plugins: [],

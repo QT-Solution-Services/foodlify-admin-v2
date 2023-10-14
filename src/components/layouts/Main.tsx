@@ -3,8 +3,8 @@ import React from "react";
 
 function Main({ children }: MainProps) {
   return (
-    <div className="max-h-screen overflow-y-auto bg-stone-100 p-4">
-      <div className="bg-white ">{children}</div>
+    <div className="max-h-screen overflow-y-auto bg-stone-100 px-24 py-10">
+      <div className="">{children}</div>
     </div>
   );
 }

@@ -14,3 +14,8 @@ export interface SidebarButtonProps {
   Icon: React.ReactNode;
   children: React.ReactNode;
 }
+
+export interface LoginFormProps {
+  username: string;
+  password: string;
+}

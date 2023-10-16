@@ -60,7 +60,7 @@ export function SidebarButton({ href, Icon, children }: SidebarButtonProps) {
       <Button
         startIcon={Icon && <Icon />}
         size="large"
-        className={` hover:text-primary w-full  ${
+        className={` w-full hover:text-primary  ${
           router.pathname === href ? "bg-primary text-white" : " text-stone-600"
         } `}
       >

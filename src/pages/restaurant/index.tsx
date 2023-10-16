@@ -1,9 +1,26 @@
 import AppLayout from "@/components/layouts/AppLayout";
-import React from "react";
+import React, { useEffect } from "react";
 import RestaurantTableOperations from "./RestaurantTableOperations";
 import RestaurantTable from "./RestaurantTable";
+import useRestaurant from "@/hooks/useRestaurant";
+import { Spinner } from "@/components/Button";
+import { formatResturantData } from "@/utils/Helper";
 
-function index() {
+function Index() {
+  const { isLoading, error, data: restaurants } = useRestaurant();
+
+  if (isLoading)
+    return (
+      <AppLayout>
+        <Spinner />
+      </AppLayout>
+    );
+  const resturantData =
+    restaurants !== undefined
+      ? restaurants.map((resturant: any) => formatResturantData(resturant))
+      : [];
+
+  console.log(restaurants);
   return (
     <AppLayout>
       <>
@@ -13,12 +30,13 @@ function index() {
           </h2>
           <RestaurantTableOperations />
         </div>
+
         <div>
-          <RestaurantTable />
+          <RestaurantTable restaurants={resturantData} />
         </div>
       </>
     </AppLayout>
   );
 }
 
-export default index;
+export default Index;

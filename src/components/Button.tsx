@@ -44,8 +44,6 @@ export function OutlineButton({
 
 export function Spinner({ borderColor = "border-white" }) {
   return (
-    <div
-      className={`animate-spin rounded-full border-solid border-t-transparent  dark:border-t-white/70 ${borderColor} dark:border-dark-charcoal mx-auto h-5 w-5 border-2`}
-    ></div>
+    <div className="mx-auto h-6 w-6 animate-spin rounded-full border-2 border-t-0 border-primary/80 p-8"></div>
   );
 }

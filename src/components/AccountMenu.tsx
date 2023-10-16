@@ -1,25 +1,27 @@
-import * as React from "react";
-import Box from "@mui/material/Box";
+import React from "react";
 import Avatar from "@mui/material/Avatar";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
+
 import Tooltip from "@mui/material/Tooltip";
 import { FiSettings, FiLogOut } from "react-icons/fi";
 import { RxPerson } from "react-icons/rx";
+import ThemeToggler from "./ThemeToggler/ThemeToggler";
 
 export default function AccountMenu() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
   };
+
   return (
     <React.Fragment>
       <Tooltip title="Account settings">
@@ -79,6 +81,12 @@ export default function AccountMenu() {
             <FiSettings fontSize="large" />
           </ListItemIcon>
           Settings
+        </MenuItem>
+        <MenuItem onClick={handleClose}>
+          <ListItemIcon>
+            <FiSettings fontSize="large" />
+          </ListItemIcon>
+          dark mode <ThemeToggler />
         </MenuItem>
         <MenuItem onClick={handleClose}>
           <ListItemIcon>

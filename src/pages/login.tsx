@@ -1,16 +1,23 @@
+import Link from "next/link";
+import React from "react";
+
 import Button from "@/components/Button";
 import FormTextField from "@/components/formComponents/FormTextField";
 import PasswordTextField from "@/components/formComponents/PasswordTextField";
 import Image from "next/image";
 
-import Link from "next/link";
-import React from "react";
 import { useForm, FormProvider } from "react-hook-form";
+import { LoginFormProps } from "@/interfaces/App.interface";
+import useAuthentication from "@/hooks/useAuthentication";
+import useAuthQuery from "@/hooks/useAuthQuery";
 
 function Index() {
   const formMethods = useForm();
+  // const { handleLoginWithForm } = useAuthentication();
+  const { handleLoginWithForm, isLoading, data } = useAuthQuery();
+
   function onSubmit() {
-    console.log(formMethods.getValues());
+    handleLoginWithForm(formMethods.getValues() as LoginFormProps);
   }
   return (
     <div className="my-20 grid  grid-cols-12 gap-6 px-20">
@@ -35,15 +42,17 @@ function Index() {
           </h1>
 
           <FormTextField
-            name="email"
+            name="username"
+            defaultValue="admin@foodlify.com.ng"
             label="Email"
             icontype="email"
             rules={{ required: "Email required" }}
           />
 
           <PasswordTextField
-            name="username"
+            name="password"
             label="Username"
+            defaultValue="TheAdmin@foodlify"
             type="password"
             rules={{ required: "Username required" }}
           />
@@ -51,7 +60,11 @@ function Index() {
             <Link href="/">Forget Password? </Link>
           </div>
 
-          <Button type="primary" className="w-full bg-primary py-4 text-white ">
+          <Button
+            type="primary"
+            loading={isLoading}
+            className="w-full bg-primary py-4 text-white "
+          >
             Login
           </Button>
         </form>

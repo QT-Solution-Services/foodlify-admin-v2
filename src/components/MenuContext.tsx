@@ -6,8 +6,14 @@ import { IconButton, ListItemIcon } from "@mui/material";
 import { RxDotsVertical } from "react-icons/rx";
 import { LiaEdit } from "react-icons/lia";
 import { RiDeleteBinLine } from "react-icons/ri";
+import { useRouter } from "next/router";
+import {
+  MenuContextProps,
+  MenuItemListProps,
+} from "@/interfaces/App.interface";
 
-export default function MenuAction() {
+export default function MenuAction({ menuListValue }: any) {
+  const router = useRouter();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -37,20 +43,23 @@ export default function MenuAction() {
           "aria-labelledby": "basic-button",
         }}
       >
-        <MenuItem onClick={handleClose}>
-          {" "}
-          <ListItemIcon>
-            <LiaEdit fontSize="large" />
-          </ListItemIcon>{" "}
-          Edit
-        </MenuItem>
-        <MenuItem onClick={handleClose}>
-          <ListItemIcon>
-            <RiDeleteBinLine fontSize="large" />
-          </ListItemIcon>{" "}
-          Delete
-        </MenuItem>
-        <MenuItem onClick={handleClose}>Logout</MenuItem>
+        {menuListValue &&
+          menuListValue.map((listItem: MenuContextProps, idx: number) => {
+            return (
+              <MenuItem
+                key={idx}
+                onClick={() => {
+                  handleClose();
+                  router.push(listItem.naviagte);
+                }}
+              >
+                <ListItemIcon>
+                  {listItem.ItemIcon && <listItem.ItemIcon />}
+                </ListItemIcon>
+                {listItem.menuItem}
+              </MenuItem>
+            );
+          })}
       </Menu>
     </div>
   );

@@ -5,22 +5,27 @@ import RestaurantTable from "./RestaurantTable";
 import useRestaurant from "@/hooks/useRestaurant";
 import { Spinner } from "@/components/Button";
 import { formatResturantData } from "@/utils/Helper";
+import Pagination from "@/components/layouts/Pagination";
+import { useRouter } from "next/router";
 
 function Index() {
-  const { isLoading, error, data: restaurants } = useRestaurant();
+  const {
+    isLoading,
+    body,
+    is_last_page,
+    total_pages,
+    error,
+    body: restaurants,
+  } = useRestaurant();
 
-  if (isLoading)
-    return (
-      <AppLayout>
-        <Spinner />
-      </AppLayout>
-    );
+  if (isLoading) return <Spinner />;
+
   const resturantData =
     restaurants !== undefined
       ? restaurants.map((resturant: any) => formatResturantData(resturant))
       : [];
 
-  console.log(restaurants);
+  // console.log(restaurants, total_pages);
   return (
     <AppLayout>
       <>
@@ -33,6 +38,7 @@ function Index() {
 
         <div>
           <RestaurantTable restaurants={resturantData} />
+          <Pagination totalPage={total_pages} lastPage={is_last_page} />
         </div>
       </>
     </AppLayout>

@@ -1,41 +1,64 @@
-import * as React from "react";
-import TablePagination from "@mui/material/TablePagination";
-import { Divider } from "@mui/material";
+import { useRouter } from "next/router";
+import React, { useState } from "react";
+import { HiChevronLeft, HiChevronRight } from "react-icons/hi2";
 
-type propsType = {
-  count: number;
-};
+function Pagination({ totalPage, lastPage }: any) {
+  console.log(lastPage);
+  const router = useRouter();
 
-export default function Pagination({ count }: propsType) {
-  const [page, setPage] = React.useState(2);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const currentPage = Number(router.query.page) || 0;
 
-  const handleChangePage = (
-    event: React.MouseEvent<HTMLButtonElement> | null,
-    newPage: number,
-  ) => {
-    setPage(newPage);
+  const updateURL = (page: number) => {
+    router.push({
+      pathname: router.pathname,
+      query: { page },
+    });
   };
 
-  const handleChangeRowsPerPage = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
-
+  function nextPage() {
+    if (currentPage < totalPage - 1) {
+      updateURL(currentPage + 1);
+    }
+  }
+  function prevPage() {
+    if (currentPage > 0) {
+      updateURL(currentPage - 1);
+    }
+  }
   return (
-    <>
-      {/* <Divider /> */}
-      <TablePagination
-        component="div"
-        count={count}
-        page={page}
-        className="mt-4 bg-slate-200"
-        onPageChange={handleChangePage}
-        rowsPerPage={rowsPerPage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-      />
-    </>
+    <div className="flex w-full justify-between bg-stone-200 px-4 py-2">
+      <p>
+        Showing <Span value={currentPage + 1} />
+        of <Span value={totalPage} /> pages
+      </p>
+      <div className="flex gap-3">
+        <button
+          disabled={currentPage === 0}
+          onClick={prevPage}
+          className={`disable rounded-md px-2 py-1 duration-300 hover:bg-primary hover:text-white hover:transition-all ${
+            currentPage === 0 && "cursor-not-allowed opacity-50"
+          }`}
+        >
+          <HiChevronLeft className="inline-block text-2xl" />
+          Previous
+        </button>
+        <button
+          onClick={nextPage}
+          disabled={lastPage}
+          className={`rounded-md px-2 py-1 duration-300 hover:bg-primary hover:text-white hover:transition-all ${
+            lastPage ? "cursor-not-allowed opacity-50" : ""
+          }`}
+        >
+          <span>Next</span>
+          <HiChevronRight className="inline-block text-2xl" />
+        </button>
+      </div>
+    </div>
   );
+}
+
+export default Pagination;
+
+export function Span({ value }: any) {
+  return <span className="font-semibold">{value} </span>;
 }

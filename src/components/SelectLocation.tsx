@@ -8,7 +8,6 @@ function SelectLocation() {
     <div>
       <select
         value={location}
-        defaultValue={location}
         onChange={(e) => setLocation(e.target.value)}
         className="w-[200px] rounded-md border border-stone-400 bg-white px-4 py-2 text-primary outline-none focus:border-primary "
       >

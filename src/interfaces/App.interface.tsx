@@ -19,3 +19,11 @@ export interface LoginFormProps {
   username: string;
   password: string;
 }
+
+export interface MenuContextProps {
+  menuItem: string;
+  ItemIcon: React.ReactNode;
+  naviagte: string;
+}
+
+export interface MenuItemListProps extends Array<MenuContextProps> {}

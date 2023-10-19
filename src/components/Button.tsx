@@ -1,3 +1,5 @@
+import AppLayout from "./layouts/AppLayout";
+
 export default function Button({
   children,
   className = "",
@@ -44,6 +46,8 @@ export function OutlineButton({
 
 export function Spinner({ borderColor = "border-white" }) {
   return (
-    <div className="mx-auto h-6 w-6 animate-spin rounded-full border-2 border-t-0 border-primary/80 p-8"></div>
+    <AppLayout>
+      <div className="mx-auto h-6 w-6 animate-spin rounded-full border-2 border-t-0 border-primary/80 p-8"></div>
+    </AppLayout>
   );
 }

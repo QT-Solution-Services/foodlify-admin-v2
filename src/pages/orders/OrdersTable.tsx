@@ -8,31 +8,27 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import MenuAction from "@/components/MenuContext";
 import { Divider, TableFooter } from "@mui/material";
+import Pagination from "@/components/layouts/Pagination";
 import Image from "next/image";
-import { LiaEdit } from "react-icons/lia";
 import { MenuItemListProps } from "@/interfaces/App.interface";
-import { FiEye } from "react-icons/fi";
-import { AiOutlineFileAdd, AiOutlineDelete } from "react-icons/ai";
+import { LiaEye } from "react-icons/lia";
+import { GrAction } from "react-icons/gr";
 
-const menuListValue: MenuItemListProps = [
-  {
-    menuItem: "Edit",
-    ItemIcon: LiaEdit,
-    naviagte: "/users",
-  },
-  {
-    menuItem: "Add new",
-    ItemIcon: AiOutlineFileAdd,
-    naviagte: "/users",
-  },
-  {
-    menuItem: "Delete",
-    ItemIcon: AiOutlineDelete,
-    naviagte: "/users",
-  },
-];
+// const menuListValue: MenuItemListProps = [
+//   {
+//     menuItem: "see details",
+//     ItemIcon: LiaEye,
+//     naviagte: "/orders/orderDetails",
+//   },
+//   {
+//     menuItem: "more action",
+//     ItemIcon: GrAction,
+//     naviagte: "/users",
+//   },
+// ];
 
-function RestaurantTable({ restaurants }: any) {
+function OrdersTable({ orders }: any) {
+  if (true) return <p>Oreders</p>;
   return (
     <>
       <TableContainer component={Paper}>
@@ -40,26 +36,22 @@ function RestaurantTable({ restaurants }: any) {
           <TableHead>
             <TableRow>
               <TableCell align="center" sx={{ fontWeight: 800, fontSize: 18 }}>
-                Logo
+                &nbsp;
               </TableCell>
               <TableCell align="center" sx={{ fontWeight: 800, fontSize: 18 }}>
-                Name
-              </TableCell>
-
-              <TableCell align="center" sx={{ fontWeight: 800, fontSize: 18 }}>
-                Close
+                Restaurant
               </TableCell>
               <TableCell align="center" sx={{ fontWeight: 800, fontSize: 18 }}>
-                Status
+                OrderId
               </TableCell>
               <TableCell align="center" sx={{ fontWeight: 800, fontSize: 18 }}>
-                Number
+                status
               </TableCell>
               <TableCell align="center" sx={{ fontWeight: 800, fontSize: 18 }}>
-                Location
+                Item count
               </TableCell>
               <TableCell align="center" sx={{ fontWeight: 800, fontSize: 18 }}>
-                Address
+                Delivery Type
               </TableCell>
               <TableCell align="center" sx={{ fontWeight: 800, fontSize: 18 }}>
                 &nbsp;
@@ -67,7 +59,7 @@ function RestaurantTable({ restaurants }: any) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {restaurants.map((restaurant: any, idx: any) => (
+            {orders.map((order: any, idx: any) => (
               <TableRow
                 key={idx}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -75,7 +67,7 @@ function RestaurantTable({ restaurants }: any) {
                 <TableCell component="th" scope="row">
                   <div style={{ width: "60px", height: "60px" }}>
                     <Image
-                      src={restaurant.logo}
+                      src={order.logo}
                       alt="logo"
                       width={120}
                       height={120}
@@ -83,26 +75,36 @@ function RestaurantTable({ restaurants }: any) {
                     />
                   </div>
                 </TableCell>
-                <TableCell align="center">{restaurant.name}</TableCell>
-                <TableCell align="center" sx={{ minWidth: 100 }}>
-                  {restaurant.close_time}
-                </TableCell>
-                <TableCell align="center">{restaurant.status}</TableCell>
-                <TableCell align="center">{restaurant.number}</TableCell>
-                <TableCell align="center">{restaurant.location}</TableCell>
-                <TableCell align="center" sx={{ fontSize: 12 }}>
-                  {restaurant.address}
-                </TableCell>
+                <TableCell align="center">{order.restaurantName}</TableCell>
+                <TableCell align="center">{order.orderId}</TableCell>
+                <TableCell align="center">{order.status}</TableCell>
+                <TableCell align="center">{order.itemCount}</TableCell>
+                <TableCell align="center">{order.deliveryType}</TableCell>
+
                 <TableCell align="center">
-                  <MenuAction menuListValue={menuListValue} />
+                  <MenuAction
+                    menuListValue={[
+                      {
+                        menuItem: "see details",
+                        ItemIcon: LiaEye,
+                        naviagte: `/orders/${order.orderId}`,
+                      },
+                      {
+                        menuItem: "more action",
+                        ItemIcon: GrAction,
+                        naviagte: "/users",
+                      },
+                    ]}
+                  />
                 </TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
+      <Pagination count={40} />
     </>
   );
 }
 
-export default RestaurantTable;
+export default OrdersTable;

@@ -7,7 +7,7 @@ import Main from "./Main";
 
 function AppLayout({ children }: AppLayoutProps) {
   return (
-    <div className="grid max-h-screen grid-cols-[20rem_1fr] grid-rows-[auto_1fr]">
+    <div className="grid max-h-screen grid-cols-[19rem_1fr] grid-rows-[auto_1fr]">
       <Header />
       <Sidebar />
       <Main>{children}</Main>

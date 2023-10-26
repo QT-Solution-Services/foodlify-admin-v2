@@ -3,21 +3,27 @@ import { AuthContext } from "@/contexts/Auth.context";
 import { ToastContext } from "@/contexts/Toast.context";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
+import { useRouter } from "next/router";
 import { useContext } from "react";
 
 export default function useOrders() {
   const { token } = useContext(AuthContext);
   const { showToast } = useContext(ToastContext);
+  const router = useRouter();
+  const page = router.query.page || 0;
+  const location = router.query.location || "zaria";
+
   const fetchOrders = async () => {
     try {
       const res = await axios.get(ordersRoute, {
         headers: {
           Authorization: token ? `Bearer ${token}` : "",
         },
+        params: { location, page },
       });
       if (res.data) {
-        console.log(res.data);
-        return res.data.body;
+        // console.log(res.data);
+        return res.data;
       }
     } catch (err) {
       showToast("error", `and error ${err}`);
@@ -26,7 +32,7 @@ export default function useOrders() {
 
   const queryClient = useQueryClient();
   const {
-    data: orders,
+    data: { body, is_last_page, total_pages } = {},
     error,
     isLoading,
   } = useQuery({
@@ -34,14 +40,15 @@ export default function useOrders() {
     queryFn: fetchOrders,
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["orders"],
+        queryKey: ["orders", page, location],
       });
     },
   });
 
   return {
     isLoading,
-    orders,
-    error,
+    body,
+    is_last_page,
+    total_pages,
   };
 }

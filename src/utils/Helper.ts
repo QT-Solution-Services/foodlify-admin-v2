@@ -1,3 +1,11 @@
+// export const formatCurrency = (value: any) =>
+//   new Intl.NumberFormat("en", {
+//     style: "currency",
+//     currency: "NGN",
+//   }).format(value);
+export const formatCurrency = (value: any) => {
+  return `₦${new Intl.NumberFormat("en-NG").format(value)}`;
+};
 export function formatResturantData(data: any) {
   const {
     name,
@@ -34,49 +42,19 @@ export function formatResturantData(data: any) {
 
 export function formatOrdersData(order: any) {
   const {
-    delivery_address,
     status,
-    user,
-    restaurant,
-    item_count: itemCount,
+    items: itemsCount,
     order_at: orderTime,
     order_id: orderId,
-    delivery_type: deliveryType,
+    restaurants,
   } = order;
 
-  const {
-    name: restaurantName,
-    address: restaurantAddress,
-    logo,
-    restaurant_id: restaurantId,
-  } = restaurant;
-
-  const {
-    address: deliveryAddress,
-    address_id: addressId,
-    contact_name: cName,
-    phone_number: cNumber,
-  } = delivery_address;
-
-  const { first_name: fName, last_name: lName, email } = user;
-
   const formatedOrder = {
-    restaurantName,
-    restaurantAddress,
-    logo,
-    restaurantId,
-    deliveryAddress,
-    cName,
-    cNumber,
+    restaurants,
+    itemsCount,
     status,
-    fName,
-    lName,
-    email,
-    itemCount,
     orderId,
-    addressId,
     orderTime,
-    deliveryType,
   };
   return formatedOrder;
 }

@@ -7,6 +7,7 @@ import ToastContextProvider from "@/contexts/Toast.context";
 import "react-toastify/dist/ReactToastify.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { SelectLocationProvider } from "@/contexts/SelectLocation.context";
 
 const client = new QueryClient({
   defaultOptions: {
@@ -24,7 +25,9 @@ export default function App({ Component, pageProps }: AppProps) {
         <ReactQueryDevtools initialIsOpen={false} />
         <AuthProvider>
           <ToastContextProvider>
-            <Component {...pageProps} />
+            <SelectLocationProvider>
+              <Component {...pageProps} />
+            </SelectLocationProvider>
           </ToastContextProvider>
         </AuthProvider>
       </QueryClientProvider>

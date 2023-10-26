@@ -2,8 +2,7 @@ import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { HiChevronLeft, HiChevronRight } from "react-icons/hi2";
 
-function Pagination({ totalPage, lastPage }: any) {
-  console.log(lastPage);
+function Pagination({ totalPage = 0, lastPage }: any) {
   const router = useRouter();
 
   const currentPage = Number(router.query.page) || 0;
@@ -25,6 +24,7 @@ function Pagination({ totalPage, lastPage }: any) {
       updateURL(currentPage - 1);
     }
   }
+  if (totalPage === 0) return null;
   return (
     <div className="flex w-full justify-between bg-stone-200 px-4 py-2">
       <p>

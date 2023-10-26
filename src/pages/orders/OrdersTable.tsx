@@ -14,21 +14,7 @@ import { MenuItemListProps } from "@/interfaces/App.interface";
 import { LiaEye } from "react-icons/lia";
 import { GrAction } from "react-icons/gr";
 
-// const menuListValue: MenuItemListProps = [
-//   {
-//     menuItem: "see details",
-//     ItemIcon: LiaEye,
-//     naviagte: "/orders/orderDetails",
-//   },
-//   {
-//     menuItem: "more action",
-//     ItemIcon: GrAction,
-//     naviagte: "/users",
-//   },
-// ];
-
 function OrdersTable({ orders }: any) {
-  if (true) return <p>Oreders</p>;
   return (
     <>
       <TableContainer component={Paper}>
@@ -36,10 +22,10 @@ function OrdersTable({ orders }: any) {
           <TableHead>
             <TableRow>
               <TableCell align="center" sx={{ fontWeight: 800, fontSize: 18 }}>
-                &nbsp;
+                Logo(s)
               </TableCell>
               <TableCell align="center" sx={{ fontWeight: 800, fontSize: 18 }}>
-                Restaurant
+                Restaurant(s)
               </TableCell>
               <TableCell align="center" sx={{ fontWeight: 800, fontSize: 18 }}>
                 OrderId
@@ -48,10 +34,10 @@ function OrdersTable({ orders }: any) {
                 status
               </TableCell>
               <TableCell align="center" sx={{ fontWeight: 800, fontSize: 18 }}>
-                Item count
+                Items
               </TableCell>
               <TableCell align="center" sx={{ fontWeight: 800, fontSize: 18 }}>
-                Delivery Type
+                Location
               </TableCell>
               <TableCell align="center" sx={{ fontWeight: 800, fontSize: 18 }}>
                 &nbsp;
@@ -65,21 +51,33 @@ function OrdersTable({ orders }: any) {
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
                 <TableCell component="th" scope="row">
-                  <div style={{ width: "60px", height: "60px" }}>
-                    <Image
-                      src={order.logo}
-                      alt="logo"
-                      width={120}
-                      height={120}
-                      className="min-w-36 h-full object-cover"
-                    />
+                  <div
+                    className="flex space-x-[-10px] p-1.5"
+                    style={{ width: "60px", height: "60px" }}
+                  >
+                    {order.restaurants.map((restaurant: any, idx: any) => (
+                      <Image
+                        key={idx}
+                        // src={restaurant.logo}
+                        src={`/${idx + 1}.webp`}
+                        alt="logo"
+                        width={50}
+                        height={50}
+                        className=" min-w-28 -ml-5 h-full rounded-full object-cover"
+                      />
+                    ))}
                   </div>
                 </TableCell>
-                <TableCell align="center">{order.restaurantName}</TableCell>
+                <TableCell align="center">
+                  {order.restaurants[0].name}
+                </TableCell>
                 <TableCell align="center">{order.orderId}</TableCell>
                 <TableCell align="center">{order.status}</TableCell>
-                <TableCell align="center">{order.itemCount}</TableCell>
-                <TableCell align="center">{order.deliveryType}</TableCell>
+                <TableCell align="center">{order.itemsCount}</TableCell>
+
+                <TableCell align="center">
+                  {order.restaurants[0].location}
+                </TableCell>
 
                 <TableCell align="center">
                   <MenuAction

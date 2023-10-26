@@ -1,18 +1,27 @@
+import { useSelectLocation } from "@/hooks/useSelectLocation";
+import { useRouter } from "next/router";
 import React, { useState } from "react";
-import { HiLockOpen } from "react-icons/hi2";
 
 function SelectLocation() {
-  const [location, setLocation] = useState("");
-  console.log(location);
+  const { selectedLocation, setSelectedLocation } = useSelectLocation();
+  const router = useRouter();
+
+  function handleChangeLocation(e: any) {
+    setSelectedLocation(e.target.value);
+    router.push({
+      query: { location: e.target.value },
+    });
+  }
+
   return (
     <div>
       <select
-        value={location}
-        onChange={(e) => setLocation(e.target.value)}
+        value={selectedLocation}
+        onChange={handleChangeLocation}
         className="w-[200px] rounded-md border border-stone-400 bg-white px-4 py-2 text-primary outline-none focus:border-primary "
       >
+        <option value="zaria">Zaria</option>
         <option value="kaduna">Kaduna</option>
-        <option value="kano">Kano</option>
         <option value="abuja">Abuja</option>
       </select>
     </div>

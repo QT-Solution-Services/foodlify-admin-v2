@@ -26,7 +26,7 @@ export default function Button({
         loading ? "cursor-not-allowed opacity-50" : ""
       }  `}
     >
-      {loading ? <Spinner /> : <>{children}</>}
+      {loading ? <SpinnerMini /> : <>{children}</>}
     </button>
   );
 }
@@ -39,7 +39,7 @@ export function OutlineButton({
 }: any) {
   return (
     <button {...props} className={`${className} h-10  border px-5 `}>
-      {loading ? <Spinner /> : <>{children}</>}
+      {loading ? <SpinnerMini /> : <>{children}</>}
     </button>
   );
 }
@@ -49,5 +49,13 @@ export function Spinner({ borderColor = "border-white" }) {
     <AppLayout>
       <div className="mx-auto h-6 w-6 animate-spin rounded-full border-2 border-t-0 border-primary/80 p-8"></div>
     </AppLayout>
+  );
+}
+
+export function SpinnerMini({ borderColor = "border-white" }) {
+  return (
+    <div
+      className={`mx-auto h-4 w-4 animate-spin rounded-full border-2 border-t-0 ${borderColor} p-3`}
+    ></div>
   );
 }

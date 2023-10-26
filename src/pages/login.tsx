@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React from "react";
 
-import Button from "@/components/Button";
+import Button, { SpinnerMini } from "@/components/Button";
 import FormTextField from "@/components/formComponents/FormTextField";
 import PasswordTextField from "@/components/formComponents/PasswordTextField";
 import Image from "next/image";
@@ -13,11 +13,14 @@ import useAuthQuery from "@/hooks/useAuthQuery";
 
 function Index() {
   const formMethods = useForm();
-  // const { handleLoginWithForm } = useAuthentication();
-  const { handleLoginWithForm, isLoading, data } = useAuthQuery();
+  const { login, isLoading } = useAuthQuery();
 
   function onSubmit() {
-    handleLoginWithForm(formMethods.getValues() as LoginFormProps);
+    login(formMethods.getValues() as LoginFormProps, {
+      onSettled: () => {
+        formMethods.reset();
+      },
+    });
   }
   return (
     <div className="my-20 grid  grid-cols-12 gap-6 px-20">
@@ -43,7 +46,7 @@ function Index() {
 
           <FormTextField
             name="username"
-            defaultValue="admin@foodlify.com.ng"
+            defaultValue="admin@foodlify.com"
             label="Email"
             icontype="email"
             rules={{ required: "Email required" }}
@@ -52,7 +55,7 @@ function Index() {
           <PasswordTextField
             name="password"
             label="Username"
-            defaultValue="TheAdmin@foodlify"
+            defaultValue="password"
             type="password"
             rules={{ required: "Username required" }}
           />
@@ -62,6 +65,7 @@ function Index() {
 
           <Button
             type="primary"
+            disabled={isLoading}
             loading={isLoading}
             className="w-full bg-primary py-4 text-white "
           >

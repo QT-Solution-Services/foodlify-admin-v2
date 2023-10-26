@@ -10,8 +10,10 @@ import Tooltip from "@mui/material/Tooltip";
 import { FiSettings, FiLogOut } from "react-icons/fi";
 import { RxPerson } from "react-icons/rx";
 import ThemeToggler from "./ThemeToggler/ThemeToggler";
+import useLogout from "@/hooks/useLogout";
 
 export default function AccountMenu() {
+  const { handleLogout } = useLogout();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
@@ -88,7 +90,7 @@ export default function AccountMenu() {
           </ListItemIcon>
           dark mode <ThemeToggler />
         </MenuItem>
-        <MenuItem onClick={handleClose}>
+        <MenuItem onClick={handleLogout}>
           <ListItemIcon>
             <FiLogOut fontSize="large" />
           </ListItemIcon>

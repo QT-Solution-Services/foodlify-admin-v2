@@ -5,9 +5,12 @@ import useOrders from "./useOrders";
 import { Spinner } from "@/components/Button";
 import { formatOrdersData } from "@/utils/Helper";
 import OrdersTable from "./OrdersTable";
+import { useRouter } from "next/router";
+import Pagination from "@/components/layouts/Pagination";
 
 function Index() {
-  const { orders, isLoading, error } = useOrders();
+  const { body: orders, total_pages, is_last_page, isLoading } = useOrders();
+  const router = useRouter();
 
   if (isLoading) return <Spinner />;
 
@@ -15,7 +18,7 @@ function Index() {
     orders !== undefined
       ? orders.map((order: any) => formatOrdersData(order))
       : [];
-
+  // !isLoading && console.log(orders);
   return (
     <AppLayout>
       <>
@@ -26,10 +29,14 @@ function Index() {
           <OrdersTableOperations />
         </div>
 
-        <div>
-          {" "}
-          <OrdersTable orders={formatedOrders} />{" "}
-        </div>
+        {!orders ? (
+          <p>No orders founds</p>
+        ) : (
+          <div>
+            <OrdersTable orders={formatedOrders} />{" "}
+            <Pagination totalPage={total_pages} lastPage={is_last_page} />
+          </div>
+        )}
       </>
     </AppLayout>
   );

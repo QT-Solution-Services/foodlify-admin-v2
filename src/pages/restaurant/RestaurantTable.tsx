@@ -40,7 +40,7 @@ function RestaurantTable({ restaurants }: any) {
           <TableHead>
             <TableRow>
               <TableCell align="center" sx={{ fontWeight: 800, fontSize: 18 }}>
-                Logo
+                &nbsp;
               </TableCell>
               <TableCell align="center" sx={{ fontWeight: 800, fontSize: 18 }}>
                 Name

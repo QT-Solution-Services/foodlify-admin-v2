@@ -20,12 +20,10 @@ export default function useRestaurant() {
         },
         params: { page },
       });
-      if (res.data) {
-        // console.log(res.data);
-        return res.data;
-      }
+      if (res.data) return res.data;
+      return null;
     } catch (err) {
-      showToast("error", `and error ${err}`);
+      console.log("error", `and error ${err}`);
     }
   };
 
@@ -41,6 +39,10 @@ export default function useRestaurant() {
       queryClient.invalidateQueries({
         queryKey: ["restaurant", page],
       });
+      // queryClient.prefetchQuery({
+      //   queryKey: ["restaurant", page],
+      //   queryFn: fetchResutrant
+      // })
     },
   });
   return {

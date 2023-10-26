@@ -1,21 +1,18 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { AuthContext } from "@/contexts/Auth.context";
 import { ToastContext } from "@/contexts/Toast.context";
 
 import { LoginFormProps } from "@/interfaces/App.interface";
 import { loginRoute } from "@/constants/apiRoutes";
-import useSecureRequest from "./useRequest";
 import { useRouter } from "next/router";
 import axios from "axios";
 
 export default function useAuthQuery() {
   const queryClient = useQueryClient();
   const router = useRouter();
-  const { post, get, put } = useSecureRequest();
 
   const { showToast } = useContext(ToastContext);
-
   const { setAuthToken, setAdminDetails } = useContext(AuthContext);
 
   function extractAdminData(data: any) {
@@ -27,29 +24,28 @@ export default function useAuthQuery() {
   }
 
   const handleLoginWithForm = async (data: LoginFormProps) => {
-    showToast("warn", "processing request...");
     try {
       const res = await axios.post(loginRoute, data);
-      if (res.status === 200) {
-        console.log(res.data);
-        extractAdminData(res.data);
-        router.push("/restaurant");
-        queryClient.invalidateQueries({
-          queryKey: ["login"],
-        });
-      }
-    } catch (err) {
-      console.log(err);
+      if (res.data) return res.data;
+    } catch (error) {
+      console.log("Error", error);
+      throw new Error(`An Error occured, ${error}`);
     }
   };
 
-  const { isLoading, error, data } = useMutation({
-    mutationFn: handleLoginWithForm,
+  const { mutate: login, isLoading } = useMutation({
+    mutationFn: (data: LoginFormProps) => handleLoginWithForm(data),
+    onSuccess: (data) => {
+      extractAdminData(data);
+      router.push("/restaurant");
+      queryClient.invalidateQueries({
+        queryKey: ["login"],
+      });
+    },
     onError: (error) => {
-      showToast("error", "an error occured");
-      console.log("rq", error);
+      showToast("error", `invalide username or password`);
     },
   });
 
-  return { isLoading, handleLoginWithForm, data };
+  return { isLoading, login };
 }

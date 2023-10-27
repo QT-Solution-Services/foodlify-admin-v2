@@ -2,32 +2,40 @@ import ButtonCusttom, { Spinner } from "@/components/Button";
 import AppLayout from "@/components/layouts/AppLayout";
 import { formatCurrency, formatDate } from "@/utils/Helper";
 import { useRouter } from "next/router";
-import { TfiLocationPin } from "react-icons/tfi";
-import { LuUser } from "react-icons/lu";
-import React from "react";
+import React, { useContext } from "react";
 import useSingleOrder from "../useSingleOrder";
 import { Divider } from "@mui/material";
 import OrderItemBox from "../OrderItemBox";
 import OrderDeliveryAddress from "../OrderDeliveryAddress";
-import useOrdersApi from "../useOrdersApi";
+import useOrderAction from "../useOrderAction";
+import { ToastContext } from "@/contexts/Toast.context";
 
 const statusColor: any = {
-  delivered: "bg-green-100 px-2 mt-auto text-green-300 rounded-full",
-  approved: "bg-sky-100 px-2 mt-auto text-sky-400",
-  pending: "bg-amber-100 px-2 mt-auto text-amber-400",
-  sentfordelivery: "bg-purple-100 px-2 mt-auto text-purple-400",
-  rejected: "bg-red-100 text-red-400  mt-auto px-3 text-center rounded-full",
+  delivered: "bg-green-200 px-2 mt-auto text-green-600 rounded-full",
+  approved: "bg-sky-200 px-2 mt-auto text-sky-600 rounded-full",
+  pending: "bg-amber-200 px-2 mt-auto text-amber-600 rounded-full",
+  sent_for_delivery: "bg-purple-200 px-2 mt-auto text-purple-700 rounded-full",
+  rejected: "bg-red-200 text-red-600  px-2 mt-auto rounded-full",
 };
 
 function Index() {
   const router = useRouter();
   const { orderid } = router.query;
+  const { showToast } = useContext(ToastContext);
 
   if (orderid === undefined) return <p>Provide an orderId </p>;
 
   const { isLoading, data } = useSingleOrder(orderid);
-  const { aprrove, sentfordelivery, isLoadingOrder, isLoadingApprove } =
-    useOrdersApi();
+  const {
+    reject,
+    aprrove,
+    sentfordelivery,
+    delivered,
+    isRejecting,
+    isApproving,
+    isSendingForDelivery,
+    isDelivering,
+  } = useOrderAction();
 
   if (isLoading) return <Spinner />;
   const {
@@ -40,21 +48,23 @@ function Index() {
     totalOrderPrice,
   } = data;
 
+  console.log(status);
+
   function handleStatusButton(status: string, action = "approve") {
     if (status === "PENDING" && action === "approve") {
       aprrove(`${orderid}`);
     }
     if (status === "PENDING" && action === "reject") {
-      // rejectOrder(`${orderId}`);
+      reject(`${orderid}`);
     }
     if (status === "APPROVED") {
       sentfordelivery(`${orderid}`);
     }
     if (status === "SENT_FOR_DELIVERY") {
-      // orderDelivered(`${orderId}`);
+      delivered(`${orderid}`);
     }
     if (status === "DELIVERED") {
-      // showToast("success", "No action needed");
+      showToast("success", "No action needed");
     }
   }
 
@@ -106,7 +116,7 @@ function Index() {
           <div className="flex justify-center gap-2">
             <ButtonCusttom
               type="pMedium"
-              loading={isLoadingApprove}
+              loading={isApproving}
               onClick={() => handleStatusButton(`${status}`, "approve")}
               bgc="bg-green-100"
               className="ml-2 hover:bg-green-200"
@@ -116,7 +126,7 @@ function Index() {
 
             <ButtonCusttom
               type="pMedium"
-              loading={false}
+              loading={isRejecting}
               onClick={() => handleStatusButton(`${status}`, "reject")}
               bgc="bg-red-400"
               className="ml-2 hover:bg-red-500"
@@ -126,10 +136,10 @@ function Index() {
           </div>
         ) : (
           <ButtonCusttom
-            loading={isLoadingOrder}
+            loading={isSendingForDelivery || isDelivering}
             onClick={() => handleStatusButton(`${status}`)}
             type="pMedium"
-            className="ml-2 hover:bg-green-200"
+            className="ml-2 hover:text-white"
           >
             {status === "APPROVED" && "🙂️click to sent for delivery🚀️"}
             {status === "SENT_FOR_DELIVERY" && "🤠️click if delivered📝️"}

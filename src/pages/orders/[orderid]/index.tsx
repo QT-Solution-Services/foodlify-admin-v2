@@ -9,6 +9,7 @@ import useSingleOrder from "../useSingleOrder";
 import { Divider } from "@mui/material";
 import OrderItemBox from "../OrderItemBox";
 import OrderDeliveryAddress from "../OrderDeliveryAddress";
+import useOrdersApi from "../useOrdersApi";
 
 const statusColor: any = {
   delivered: "bg-green-100 px-2 mt-auto text-green-300 rounded-full",
@@ -25,6 +26,9 @@ function Index() {
   if (orderid === undefined) return <p>Provide an orderId </p>;
 
   const { isLoading, data } = useSingleOrder(orderid);
+  const { aprrove, sentfordelivery, isLoadingOrder, isLoadingApprove } =
+    useOrdersApi();
+
   if (isLoading) return <Spinner />;
   const {
     address,
@@ -35,7 +39,24 @@ function Index() {
     status,
     totalOrderPrice,
   } = data;
-  console.log("single order", data);
+
+  function handleStatusButton(status: string, action = "approve") {
+    if (status === "PENDING" && action === "approve") {
+      aprrove(`${orderid}`);
+    }
+    if (status === "PENDING" && action === "reject") {
+      // rejectOrder(`${orderId}`);
+    }
+    if (status === "APPROVED") {
+      sentfordelivery(`${orderid}`);
+    }
+    if (status === "SENT_FOR_DELIVERY") {
+      // orderDelivered(`${orderId}`);
+    }
+    if (status === "DELIVERED") {
+      // showToast("success", "No action needed");
+    }
+  }
 
   return (
     <AppLayout>
@@ -81,9 +102,40 @@ function Index() {
       </div>
       {/* footer */}
       <div className="mt-10 flex justify-end gap-4">
-        <ButtonCusttom type="pMedium" className="text-white">
-          approve
-        </ButtonCusttom>
+        {status === "PENDING" ? (
+          <div className="flex justify-center gap-2">
+            <ButtonCusttom
+              type="pMedium"
+              loading={isLoadingApprove}
+              onClick={() => handleStatusButton(`${status}`, "approve")}
+              bgc="bg-green-100"
+              className="ml-2 hover:bg-green-200"
+            >
+              approve
+            </ButtonCusttom>
+
+            <ButtonCusttom
+              type="pMedium"
+              loading={false}
+              onClick={() => handleStatusButton(`${status}`, "reject")}
+              bgc="bg-red-400"
+              className="ml-2 hover:bg-red-500"
+            >
+              reject
+            </ButtonCusttom>
+          </div>
+        ) : (
+          <ButtonCusttom
+            loading={isLoadingOrder}
+            onClick={() => handleStatusButton(`${status}`)}
+            type="pMedium"
+            className="ml-2 hover:bg-green-200"
+          >
+            {status === "APPROVED" && "🙂️click to sent for delivery🚀️"}
+            {status === "SENT_FOR_DELIVERY" && "🤠️click if delivered📝️"}
+            {status === "DELIVERED" && "🙂️Already Delivered✅️"}
+          </ButtonCusttom>
+        )}
 
         <ButtonCusttom
           onClick={() => router.back()}

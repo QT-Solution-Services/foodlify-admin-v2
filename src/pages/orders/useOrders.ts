@@ -38,6 +38,7 @@ export default function useOrders() {
   } = useQuery({
     queryKey: ["orders"],
     queryFn: fetchOrders,
+    // refetchInterval: 2000,
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ["orders", page, location],

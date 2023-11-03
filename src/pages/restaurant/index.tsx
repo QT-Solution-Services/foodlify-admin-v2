@@ -11,7 +11,6 @@ import { useRouter } from "next/router";
 function Index() {
   const {
     isLoading,
-    body,
     is_last_page,
     total_pages,
     error,
@@ -25,7 +24,6 @@ function Index() {
       ? restaurants.map((resturant: any) => formatResturantData(resturant))
       : [];
 
-  // console.log(restaurants, total_pages);
   return (
     <AppLayout>
       <>
@@ -36,10 +34,14 @@ function Index() {
           <RestaurantTableOperations />
         </div>
 
-        <div>
-          <RestaurantTable restaurants={resturantData} />
-          <Pagination totalPage={total_pages} lastPage={is_last_page} />
-        </div>
+        {!restaurants ? (
+          <p>No restaurants found</p>
+        ) : (
+          <div>
+            <RestaurantTable restaurants={resturantData} />
+            <Pagination totalPage={total_pages} lastPage={is_last_page} />
+          </div>
+        )}
       </>
     </AppLayout>
   );

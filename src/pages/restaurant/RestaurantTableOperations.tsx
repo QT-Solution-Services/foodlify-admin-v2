@@ -7,7 +7,7 @@ function RestaurantTableOperations() {
   return (
     <div className="flex items-center justify-center gap-2">
       <Filter />
-      <SortBy />
+      {/* <SortBy /> */}
     </div>
   );
 }

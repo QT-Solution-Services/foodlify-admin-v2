@@ -11,6 +11,7 @@ export default function useRestaurant() {
   const { showToast } = useContext(ToastContext);
   const router = useRouter();
   const page = router.query.page || 0;
+  const location = router.query.location || "zaria";
 
   const fetchResutrant = async () => {
     try {
@@ -18,9 +19,12 @@ export default function useRestaurant() {
         headers: {
           Authorization: token ? `Bearer ${token}` : "",
         },
-        params: { page },
+        params: { page, location },
       });
-      if (res.data) return res.data;
+      if (res.data) {
+        console.log(res.data);
+        return res.data;
+      }
       return null;
     } catch (err) {
       console.log("error", `and error ${err}`);
@@ -33,17 +37,8 @@ export default function useRestaurant() {
     error,
     data: { is_last_page, total_pages, body } = {},
   } = useQuery({
-    queryKey: ["restaurant", page],
+    queryKey: ["restaurant", page, location],
     queryFn: fetchResutrant,
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ["restaurant", page],
-      });
-      // queryClient.prefetchQuery({
-      //   queryKey: ["restaurant", page],
-      //   queryFn: fetchResutrant
-      // })
-    },
   });
   return {
     isLoading,

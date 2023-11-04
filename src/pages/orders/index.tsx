@@ -5,12 +5,10 @@ import useOrders from "./useOrders";
 import { Spinner } from "@/components/Button";
 import { formatOrdersData } from "@/utils/Helper";
 import OrdersTable from "./OrdersTable";
-import { useRouter } from "next/router";
 import Pagination from "@/components/layouts/Pagination";
 
 function Index() {
   const { body: orders, total_pages, is_last_page, isLoading } = useOrders();
-  const router = useRouter();
 
   if (isLoading) return <Spinner />;
 

@@ -22,7 +22,6 @@ export default function useRestaurant() {
         params: { page, location },
       });
       if (res.data) {
-        console.log(res.data);
         return res.data;
       }
       return null;

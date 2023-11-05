@@ -8,6 +8,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 
 function UserTables({ users }: any) {
+  if (!users || users.length === 0) return <p>No result found</p>;
   return (
     <>
       <TableContainer component={Paper}>

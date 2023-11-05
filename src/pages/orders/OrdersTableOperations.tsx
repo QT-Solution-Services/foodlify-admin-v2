@@ -10,7 +10,7 @@ function OrdersTableOperations() {
           { filterField: "PENDING", lable: "Pending" },
           { filterField: "APPROVED", lable: "Aprroved" },
           { filterField: "DELIVERED", lable: "Delivered" },
-          { filterField: "Rejected", lable: "Rejected" },
+          { filterField: "REJECTED", lable: "Rejected" },
         ]}
       />
     </div>

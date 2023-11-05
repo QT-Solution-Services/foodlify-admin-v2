@@ -15,6 +15,7 @@ import { LiaEye } from "react-icons/lia";
 import { GrAction } from "react-icons/gr";
 
 function OrdersTable({ orders }: any) {
+  if (!orders || orders.length === 0) return <p>No result found</p>;
   return (
     <>
       <TableContainer component={Paper}>

@@ -6,8 +6,15 @@ import { Spinner } from "@/components/Button";
 import { formatOrdersData } from "@/utils/Helper";
 import OrdersTable from "./OrdersTable";
 import Pagination from "@/components/layouts/Pagination";
+import { useRouter } from "next/router";
 
 function Index() {
+  const router = useRouter();
+  // initailly filterField would be undefine there we setting it
+  !router.query.filterField
+    ? (router.query.filterField = "all")
+    : router.query.filterField;
+
   const { body: orders, total_pages, is_last_page, isLoading } = useOrders();
 
   if (isLoading) return <Spinner />;
@@ -16,7 +23,30 @@ function Index() {
     orders !== undefined
       ? orders.map((order: any) => formatOrdersData(order))
       : [];
-  // !isLoading && console.log(orders);
+
+  let filterOrders;
+  if (router.query.filterField === "all") filterOrders = formatedOrders;
+
+  if (router.query.filterField === "DELIVERED")
+    filterOrders = formatedOrders.filter(
+      (order: any) => order.status === "DELIVERED",
+    );
+
+  if (router.query.filterField === "PENDING")
+    filterOrders = formatedOrders.filter(
+      (order: any) => order.status === "PENDING",
+    );
+
+  if (router.query.filterField === "APPROVED")
+    filterOrders = formatedOrders.filter(
+      (order: any) => order.status === "APPROVED",
+    );
+
+  if (router.query.filterField === "REJECTED")
+    filterOrders = formatedOrders.filter(
+      (order: any) => order.status === "REJECTED",
+    );
+
   return (
     <AppLayout>
       <>
@@ -31,7 +61,7 @@ function Index() {
           <p>No orders founds</p>
         ) : (
           <div>
-            <OrdersTable orders={formatedOrders} />{" "}
+            <OrdersTable orders={filterOrders} />{" "}
             <Pagination totalPage={total_pages} lastPage={is_last_page} />
           </div>
         )}

@@ -6,7 +6,13 @@ import React from "react";
 function RestaurantTableOperations() {
   return (
     <div className="flex items-center justify-center gap-2">
-      <Filter />
+      <Filter
+        options={[
+          { filterField: "all", lable: "All" },
+          { filterField: "ACTIVE", lable: "Active" },
+          { filterField: "CLOSED", lable: "Closed" },
+        ]}
+      />
       {/* <SortBy /> */}
     </div>
   );

@@ -26,4 +26,9 @@ export interface MenuContextProps {
   naviagte: string;
 }
 
+export interface FilterProps {
+  // filterField: string;
+  options: { filterField: boolean | string; lable: string }[];
+}
+
 export interface MenuItemListProps extends Array<MenuContextProps> {}

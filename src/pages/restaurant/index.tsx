@@ -9,6 +9,12 @@ import Pagination from "@/components/layouts/Pagination";
 import { useRouter } from "next/router";
 
 function Index() {
+  const router = useRouter();
+  // initailly filterField would be undefine there we setting it
+  !router.query.filterField
+    ? (router.query.filterField = "all")
+    : router.query.filterField;
+
   const {
     isLoading,
     is_last_page,
@@ -23,7 +29,16 @@ function Index() {
     restaurants !== undefined
       ? restaurants.map((resturant: any) => formatResturantData(resturant))
       : [];
-
+  let filterRestaurants;
+  if (router.query.filterField === "all") filterRestaurants = resturantData;
+  if (router.query.filterField === "ACTIVE")
+    filterRestaurants = resturantData.filter(
+      (restaurant: any) => restaurant.status === "ACTIVE",
+    );
+  if (router.query.filterField === "CLOSED")
+    filterRestaurants = resturantData.filter(
+      (restaurant: any) => restaurant.status === "CLOSED",
+    );
   return (
     <AppLayout>
       <>
@@ -38,8 +53,8 @@ function Index() {
           <p>No restaurants found</p>
         ) : (
           <div>
-            <RestaurantTable restaurants={resturantData} />
-            <Pagination totalPage={total_pages} lastPage={is_last_page} />
+            <RestaurantTable restaurants={filterRestaurants} />
+            {<Pagination totalPage={total_pages} lastPage={is_last_page} />}
           </div>
         )}
       </>

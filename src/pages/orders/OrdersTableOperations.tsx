@@ -4,7 +4,15 @@ import React from "react";
 function OrdersTableOperations() {
   return (
     <div>
-      <Filter />
+      <Filter
+        options={[
+          { filterField: "all", lable: "All" },
+          { filterField: "PENDING", lable: "Pending" },
+          { filterField: "APPROVED", lable: "Aprroved" },
+          { filterField: "DELIVERED", lable: "Delivered" },
+          { filterField: "Rejected", lable: "Rejected" },
+        ]}
+      />
     </div>
   );
 }

@@ -33,6 +33,8 @@ const menuListValue: MenuItemListProps = [
 ];
 
 function RestaurantTable({ restaurants }: any) {
+  if (!restaurants || restaurants.length === 0) return <p>No result found</p>;
+
   return (
     <>
       <TableContainer component={Paper}>

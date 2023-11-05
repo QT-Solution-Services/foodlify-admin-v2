@@ -4,7 +4,13 @@ import React from "react";
 function UserTableOperations() {
   return (
     <div className="flex items-center justify-center gap-2">
-      <Filter />
+      <Filter
+        options={[
+          { filterField: "all", lable: "All" },
+          { filterField: "completed", lable: "Completed" },
+          { filterField: "not-completed", lable: "Not completed" },
+        ]}
+      />
       {/* <SortBy /> */}
     </div>
   );

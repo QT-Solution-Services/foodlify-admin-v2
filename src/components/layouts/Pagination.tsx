@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React from "react";
 import { HiChevronLeft, HiChevronRight } from "react-icons/hi2";
 
 function Pagination({ totalPage = 0, lastPage }: any) {
@@ -8,9 +8,12 @@ function Pagination({ totalPage = 0, lastPage }: any) {
   const currentPage = Number(router.query.page) || 0;
 
   const updateURL = (page: number) => {
+    const currentQuery = { ...router.query };
+    currentQuery.page = page.toString();
+
     router.push({
       pathname: router.pathname,
-      query: { page },
+      query: currentQuery,
     });
   };
 

@@ -23,7 +23,9 @@ export interface LoginFormProps {
 export interface MenuContextProps {
   menuItem: string;
   ItemIcon: React.ReactNode;
-  naviagte: string;
+  naviagte?: string;
+  restaurantId: string;
+  userId: string;
 }
 
 export interface FilterProps {

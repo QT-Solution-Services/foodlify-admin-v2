@@ -4,16 +4,19 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { IconButton, ListItemIcon } from "@mui/material";
 import { RxDotsVertical } from "react-icons/rx";
-import { LiaEdit } from "react-icons/lia";
-import { RiDeleteBinLine } from "react-icons/ri";
 import { useRouter } from "next/router";
 import {
   MenuContextProps,
   MenuItemListProps,
 } from "@/interfaces/App.interface";
+import { useBlockRestaurant } from "@/pages/restaurant/useBlockRestaurant";
+import { useBlockUser } from "@/pages/users/useBlockUser";
 
 export default function MenuAction({ menuListValue }: any) {
   const router = useRouter();
+  const { blockRestaurant, isLoading } = useBlockRestaurant();
+  const { blockUser } = useBlockUser();
+
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -22,7 +25,14 @@ export default function MenuAction({ menuListValue }: any) {
   const handleClose = () => {
     setAnchorEl(null);
   };
-
+  function handleMeunApiRequests(lable: string, id: string) {
+    if (lable === "blockRestaurant") {
+      blockRestaurant(id);
+    }
+    if (lable === "blockUser") {
+      blockUser(id);
+    }
+  }
   return (
     <div>
       <IconButton
@@ -50,7 +60,14 @@ export default function MenuAction({ menuListValue }: any) {
                 key={idx}
                 onClick={() => {
                   handleClose();
-                  router.push(listItem.naviagte);
+                  listItem.restaurantId &&
+                    handleMeunApiRequests(
+                      "blockRestaurant",
+                      listItem.restaurantId,
+                    );
+                  listItem.userId &&
+                    handleMeunApiRequests("blockUser", listItem.userId);
+                  listItem.naviagte && router.push(listItem.naviagte);
                 }}
               >
                 <ListItemIcon>

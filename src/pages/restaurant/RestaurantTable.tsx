@@ -7,30 +7,18 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import MenuAction from "@/components/MenuContext";
-import { Divider, TableFooter } from "@mui/material";
 import Image from "next/image";
-import { LiaEdit } from "react-icons/lia";
 import { MenuItemListProps } from "@/interfaces/App.interface";
-import { FiEye } from "react-icons/fi";
-import { AiOutlineFileAdd, AiOutlineDelete } from "react-icons/ai";
 
-const menuListValue: MenuItemListProps = [
-  {
-    menuItem: "Edit",
-    ItemIcon: LiaEdit,
-    naviagte: "/users",
-  },
-  {
-    menuItem: "Add new",
-    ItemIcon: AiOutlineFileAdd,
-    naviagte: "/users",
-  },
-  {
-    menuItem: "Delete",
-    ItemIcon: AiOutlineDelete,
-    naviagte: "/users",
-  },
-];
+import { MdOutlineUpdateDisabled } from "react-icons/md";
+
+// const menuListValue: MenuItemListProps = [
+//   {
+//     menuItem: "disable",
+//     ItemIcon: MdOutlineUpdateDisabled,
+//     naviagte: "/users",
+//   },
+// ];
 
 function RestaurantTable({ restaurants }: any) {
   if (!restaurants || restaurants.length === 0) return <p>No result found</p>;
@@ -96,7 +84,16 @@ function RestaurantTable({ restaurants }: any) {
                   {restaurant.address}
                 </TableCell>
                 <TableCell align="center">
-                  <MenuAction menuListValue={menuListValue} />
+                  <MenuAction
+                    menuListValue={[
+                      {
+                        menuItem: "Disable",
+                        ItemIcon: MdOutlineUpdateDisabled,
+                        // naviagte: "/users",
+                        restaurantId: `${restaurant.restaurant_id}`,
+                      },
+                    ]}
+                  />
                 </TableCell>
               </TableRow>
             ))}

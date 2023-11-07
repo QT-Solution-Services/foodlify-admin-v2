@@ -19,3 +19,9 @@ export const rejetOrderRoute = (orderId: string) =>
 
 export const singleOrderRoute = (orderId: string) =>
   `${baseUrl}/api/v1/admin/order_by_id?order_id=${orderId}`;
+
+export const blockRestaurantRoute = (restaurantId: string) =>
+  `${baseUrl}/api/v1/admin/block_restaurant/${restaurantId}`;
+
+export const blockUserRoute = (userId: string) =>
+  `${baseUrl}/api/v1/admin/block_user/${userId}`;

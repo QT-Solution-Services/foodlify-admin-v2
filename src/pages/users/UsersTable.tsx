@@ -6,6 +6,8 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import MenuAction from "@/components/MenuContext";
+import { MdOutlineUpdateDisabled } from "react-icons/md";
 
 function UserTables({ users }: any) {
   if (!users || users.length === 0) return <p>No result found</p>;
@@ -30,6 +32,9 @@ function UserTables({ users }: any) {
               </TableCell>
               <TableCell align="center" sx={{ fontWeight: 800, fontSize: 18 }}>
                 Email
+              </TableCell>
+              <TableCell align="center" sx={{ fontWeight: 800, fontSize: 18 }}>
+                &nbsp;
               </TableCell>
             </TableRow>
           </TableHead>
@@ -61,6 +66,18 @@ function UserTables({ users }: any) {
                   </div>
                 </TableCell>
                 <TableCell align="center">{user.email}</TableCell>
+                <TableCell align="center">
+                  <MenuAction
+                    menuListValue={[
+                      {
+                        menuItem: "Disable",
+                        ItemIcon: MdOutlineUpdateDisabled,
+                        // naviagte: "/users",
+                        userId: `${user.user_id}`,
+                      },
+                    ]}
+                  />
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>

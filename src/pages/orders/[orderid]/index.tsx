@@ -9,6 +9,7 @@ import OrderItemBox from "../OrderItemBox";
 import OrderDeliveryAddress from "../OrderDeliveryAddress";
 import useOrderAction from "../useOrderAction";
 import { ToastContext } from "@/contexts/Toast.context";
+import OrderItemCard from "../OrderItemCard";
 
 const statusColor: any = {
   delivered: "bg-green-200 px-2 mt-auto text-green-600 rounded-full",
@@ -100,7 +101,8 @@ function Index() {
 
         {/* food items */}
         <h1 className="mb-2 text-xl font-medium text-stone-600">Orders Menu</h1>
-        <OrderItemBox items={items} />
+        {/* <OrderItemBox items={items} /> */}
+        <OrderItemCard items={items} />
 
         <div className="my-6">
           <Divider />

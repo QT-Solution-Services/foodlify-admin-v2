@@ -13,7 +13,7 @@ const config: Config = {
         // screen: "100dvh",
       },
       colors: {
-        primary: "#FD2F2F",
+        primary: "#fc8019;",
       },
     },
   },

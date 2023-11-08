@@ -49,7 +49,7 @@ export function OutlineButton({
 export function Spinner({ borderColor = "border-white" }) {
   return (
     <AppLayout>
-      <div className="mx-auto h-6 w-6 animate-spin rounded-full border-2 border-t-0 border-primary/80 p-8"></div>
+      <div className="mx-auto h-6 w-6 animate-spin rounded-full border-2 border-t-0 border-primary p-8"></div>
     </AppLayout>
   );
 }

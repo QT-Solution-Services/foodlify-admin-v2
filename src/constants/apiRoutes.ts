@@ -1,6 +1,6 @@
 const { baseUrl } = require("./env.config");
 export const loginRoute = `${baseUrl}/api/v1/auth/admin/login`;
-export const resturantsRoute = `${baseUrl}/api/v1/admin/restaurants_paged`;
+export const resturantsRoute = `${baseUrl}/api/v1/admin/restaurants`;
 export const usersRoutes = `${baseUrl}/api/v1/admin/all_users`;
 export const ordersRoute = `${baseUrl}/api/v1/admin/order`;
 
@@ -25,3 +25,6 @@ export const blockRestaurantRoute = (restaurantId: string) =>
 
 export const blockUserRoute = (userId: string) =>
   `${baseUrl}/api/v1/admin/block_user/${userId}`;
+
+export const removeOrderItem = (orderId: string, itemId: string) =>
+  `${baseUrl}/api/v1/admin/remove_order_item/${orderId}/${itemId}`;

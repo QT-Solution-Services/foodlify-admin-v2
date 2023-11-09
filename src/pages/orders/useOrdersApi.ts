@@ -3,6 +3,7 @@ import {
   sentForDeliveryRoute,
   rejetOrderRoute,
   orderDeliveredRoute,
+  removeOrderItem,
 } from "@/constants/apiRoutes";
 import { AuthContext } from "@/contexts/Auth.context";
 import axios from "axios";
@@ -89,11 +90,30 @@ function useOrdersApi() {
     }
   };
 
+  const removeOrderItemApi = async (orderId: string, itmeId: string) => {
+    const removeOrderItemUrl = removeOrderItem(orderId, itmeId);
+    try {
+      const res = await axios.put(removeOrderItemUrl, null, {
+        headers: {
+          Authorization: token ? `Bearer ${token}` : "",
+        },
+      });
+      if (res) {
+        console.log(res);
+        return res.data.message;
+      }
+    } catch (error) {
+      console.error(error);
+      throw new Error("Could not approve order ");
+    }
+  };
+
   return {
     rejectOrderApi,
     approveOrderApi,
     sendforDeliveryApi,
     deliveredOrderApi,
+    removeOrderItemApi,
   };
 }
 

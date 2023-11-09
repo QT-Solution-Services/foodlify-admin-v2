@@ -45,6 +45,7 @@ function Index() {
     items,
     deliveryType,
     orderAt,
+    orderId,
     status,
     totalOrderPrice,
   } = data;
@@ -102,7 +103,7 @@ function Index() {
         {/* food items */}
         <h1 className="mb-2 text-xl font-medium text-stone-600">Orders Menu</h1>
         {/* <OrderItemBox items={items} /> */}
-        <OrderItemCard items={items} />
+        <OrderItemCard items={items} orderId={orderId} status={status} />
 
         <div className="my-6">
           <Divider />
@@ -136,6 +137,8 @@ function Index() {
               reject
             </ButtonCusttom>
           </div>
+        ) : status === "REJECTED" ? (
+          ""
         ) : (
           <ButtonCusttom
             loading={isSendingForDelivery || isDelivering}

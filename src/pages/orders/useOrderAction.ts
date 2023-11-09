@@ -12,6 +12,7 @@ export default function useOrderAction() {
     approveOrderApi,
     sendforDeliveryApi,
     deliveredOrderApi,
+    removeOrderItemApi,
   } = useOrdersApi();
 
   const { mutate: aprrove, isLoading: isApproving } = useMutation({
@@ -52,11 +53,22 @@ export default function useOrderAction() {
     onError: () => showToast("error", "there was an error while approving"),
   });
 
+  const { mutate: removeOrderItem, isLoading: isRemoving } = useMutation({
+    mutationFn: ({ orderId, itemId }: any) =>
+      removeOrderItemApi(orderId, itemId),
+    onSuccess: (data: any) => {
+      showToast("success", `${data} `);
+    },
+    onError: () => showToast("error", "there was an error while approving"),
+  });
+
   return {
     reject,
     aprrove,
     sentfordelivery,
     delivered,
+    removeOrderItem,
+    isRemoving,
     isRejecting,
     isApproving,
     isSendingForDelivery,

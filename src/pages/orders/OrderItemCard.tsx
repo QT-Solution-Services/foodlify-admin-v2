@@ -3,8 +3,24 @@ import { Tooltip } from "@mui/material";
 import Image from "next/image";
 import Button from "@/components/Button";
 import { formatCurrency } from "@/utils/Helper";
+import useOrderAction from "./useOrderAction";
+import { useQueryClient } from "@tanstack/react-query";
 
-function OrderItemCard({ items }: any) {
+function OrderItemCard({ items, orderId, status }: any) {
+  const { removeOrderItem, isRemoving } = useOrderAction();
+  const queryClient = useQueryClient();
+
+  function handleRemoveOrderItem(orderId: string, itemId: string) {
+    removeOrderItem(
+      { orderId, itemId },
+      {
+        onSuccess: () => {
+          // eslint-disable-next-line no-use-before-define
+          queryClient.invalidateQueries({ active: true });
+        },
+      },
+    );
+  }
   return (
     <div className="grid grid-cols-2 gap-4 ">
       {items.map(({ item, price, quantity }: any, idx: number) => (
@@ -53,24 +69,26 @@ function OrderItemCard({ items }: any) {
           </div>
 
           {/* card buttton */}
-          <div className="mt-4 flex items-center justify-center">
-            <Button
-              loading={false}
-              onClick={() => {}}
-              type="secondaryGreen"
-              className="ml-2 hover:text-white"
-            >
-              {"Pay now 💰️"}
-            </Button>
-            <Button
-              loading={false}
-              onClick={() => {}}
-              type="secondaryRed"
-              className="ml-2 hover:text-white"
-            >
-              {"Remove ❌️"}
-            </Button>
-          </div>
+          {status === "PENDING" && (
+            <div className="mt-4 flex items-center justify-center">
+              <Button
+                loading={false}
+                onClick={() => {}}
+                type="secondaryGreen"
+                className="ml-2 hover:text-white"
+              >
+                {"Pay now 💰️"}
+              </Button>
+              <Button
+                loading={isRemoving}
+                onClick={() => handleRemoveOrderItem(orderId, item.foodId)}
+                type="secondaryRed"
+                className="ml-2 hover:text-white"
+              >
+                {"Remove ❌️"}
+              </Button>
+            </div>
+          )}
         </div>
       ))}
     </div>

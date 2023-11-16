@@ -70,10 +70,11 @@ function UserTables({ users }: any) {
                   <MenuAction
                     menuListValue={[
                       {
-                        menuItem: "Disable",
-                        ItemIcon: MdOutlineUpdateDisabled,
-                        // naviagte: "/users",
-                        userId: `${user.user_id}`,
+                        menuItem: `${
+                          user.status === "BLOCKED" ? "UnBlock" : "Block"
+                        }`,
+                        ItemIcon: <MdOutlineUpdateDisabled />,
+                        userName: `${user.username}`,
                       },
                     ]}
                   />

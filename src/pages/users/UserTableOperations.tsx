@@ -9,6 +9,7 @@ function UserTableOperations() {
           { filterField: "all", lable: "All" },
           { filterField: "completed", lable: "Completed" },
           { filterField: "not-completed", lable: "Not completed" },
+          { filterField: "blocked", lable: "Blocked" },
         ]}
       />
       {/* <SortBy /> */}

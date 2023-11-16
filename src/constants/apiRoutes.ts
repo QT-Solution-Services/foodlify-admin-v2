@@ -23,8 +23,14 @@ export const singleOrderRoute = (orderId: string) =>
 export const blockRestaurantRoute = (restaurantId: string) =>
   `${baseUrl}/api/v1/admin/block_restaurant/${restaurantId}`;
 
-export const blockUserRoute = (userId: string) =>
-  `${baseUrl}/api/v1/admin/block_user/${userId}`;
+export const unBlockRestaurantRoute = (restaurantId: string) =>
+  `${baseUrl}/api/v1/admin/unblock_restaurant/${restaurantId}`;
+
+export const blockUserRoute = (username: string) =>
+  `${baseUrl}/api/v1/admin/block_user/${username}`;
+
+export const unBlockUserRoute = (username: string) =>
+  `${baseUrl}/api/v1/admin/unblock_user/${username}`;
 
 export const removeOrderItem = (orderId: string, itemId: string) =>
   `${baseUrl}/api/v1/admin/remove_order_item/${orderId}/${itemId}`;

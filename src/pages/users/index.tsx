@@ -23,6 +23,8 @@ function Index() {
     filterUsers = users.filter((user: any) => user.profile_completed === true);
   if (router.query.filterField === "not-completed")
     filterUsers = users.filter((user: any) => user.profile_completed !== true);
+  if (router.query.filterField === "blocked")
+    filterUsers = users.filter((user: any) => user.status == "BLOCKED");
 
   return (
     <AppLayout>

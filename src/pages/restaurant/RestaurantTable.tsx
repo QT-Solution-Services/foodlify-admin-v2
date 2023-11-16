@@ -8,6 +8,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import MenuAction from "@/components/MenuContext";
 import Image from "next/image";
+import { GoLinkExternal } from "react-icons/go";
 import { MenuItemListProps } from "@/interfaces/App.interface";
 
 import { MdOutlineUpdateDisabled } from "react-icons/md";
@@ -87,10 +88,16 @@ function RestaurantTable({ restaurants }: any) {
                   <MenuAction
                     menuListValue={[
                       {
-                        menuItem: "Disable",
-                        ItemIcon: MdOutlineUpdateDisabled,
-                        // naviagte: "/users",
+                        menuItem: `${
+                          restaurant.status === "BLOCKED" ? "UnBlock" : "Block"
+                        }`,
+                        ItemIcon: <MdOutlineUpdateDisabled />,
                         restaurantId: `${restaurant.restaurant_id}`,
+                      },
+                      {
+                        menuItem: "Navigate user",
+                        ItemIcon: <GoLinkExternal />,
+                        naviagte: "/users",
                       },
                     ]}
                   />

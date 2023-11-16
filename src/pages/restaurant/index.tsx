@@ -35,9 +35,9 @@ function Index() {
     filterRestaurants = resturantData.filter(
       (restaurant: any) => restaurant.status === "ACTIVE",
     );
-  if (router.query.filterField === "CLOSED")
+  if (router.query.filterField === "BLOCKED")
     filterRestaurants = resturantData.filter(
-      (restaurant: any) => restaurant.status === "CLOSED",
+      (restaurant: any) => restaurant.status === "BLOCKED",
     );
   return (
     <AppLayout>

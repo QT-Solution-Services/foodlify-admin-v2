@@ -37,7 +37,7 @@ export default function useAuthQuery() {
     mutationFn: (data: LoginFormProps) => handleLoginWithForm(data),
     onSuccess: (data) => {
       extractAdminData(data);
-      router.push("/restaurant");
+      router.push("/dashboard");
       queryClient.invalidateQueries({
         queryKey: ["login"],
       });

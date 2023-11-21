@@ -10,6 +10,7 @@ import OrderDeliveryAddress from "../OrderDeliveryAddress";
 import useOrderAction from "../useOrderAction";
 import { ToastContext } from "@/contexts/Toast.context";
 import OrderItemCard from "../OrderItemCard";
+import { testData } from "@/constants/data";
 
 const statusColor: any = {
   delivered: "bg-green-200 px-2 mt-auto text-green-600 rounded-full",
@@ -39,6 +40,18 @@ function Index() {
   } = useOrderAction();
 
   if (isLoading) return <Spinner />;
+
+  // const {
+  //   address,
+  //   deliveryFee,
+  //   items,
+  //   deliveryType,
+  //   orderAt,
+  //   orderId,
+  //   status,
+  //   totalOrderPrice,
+  // } = testData;
+
   const {
     address,
     deliveryFee,
@@ -50,7 +63,7 @@ function Index() {
     totalOrderPrice,
   } = data;
 
-  console.log(status);
+  // console.log(status);
 
   function handleStatusButton(status: string, action = "approve") {
     if (status === "PENDING" && action === "approve") {

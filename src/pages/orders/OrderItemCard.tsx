@@ -1,25 +1,63 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import { Tooltip } from "@mui/material";
 import Image from "next/image";
 import Button from "@/components/Button";
 import { formatCurrency } from "@/utils/Helper";
 import useOrderAction from "./useOrderAction";
 import { useQueryClient } from "@tanstack/react-query";
+import { ToastContext } from "@/contexts/Toast.context";
+import PaymentConfirmationBox from "@/components/PaymentConfirmationBox";
 
 function OrderItemCard({ items, orderId, status }: any) {
   const { removeOrderItem, isRemoving } = useOrderAction();
+  const { showToast } = useContext(ToastContext);
+  const [open, setOpen] = useState(false);
+  const [details, setDetails] = useState({
+    price: 0,
+    restaurant: "unknown",
+    title: "unknown",
+    quantity: "unknown",
+  });
+
   const queryClient = useQueryClient();
 
-  function handleRemoveOrderItem(orderId: string, itemId: string) {
-    removeOrderItem(
-      { orderId, itemId },
-      {
-        onSuccess: () => {
-          // eslint-disable-next-line no-use-before-define
-          queryClient.invalidateQueries({ active: true });
+  function handleRemoveOrderItem(
+    orderId: string,
+    itemId: string,
+    itemsLen: number,
+  ) {
+    if (itemsLen === 1) {
+      showToast(
+        "warn",
+        "kindly use the reject button to complete this operation!",
+      );
+    } else {
+      removeOrderItem(
+        { orderId, itemId },
+        {
+          onSuccess: () => {
+            // eslint-disable-next-line no-use-before-define
+            queryClient.invalidateQueries({ active: true });
+          },
         },
-      },
-    );
+      );
+    }
+  }
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+  function handleUpdateClick(newDetails: any) {
+    setDetails((currentDetails) => {
+      return {
+        ...currentDetails,
+        ...newDetails,
+      };
+    });
   }
   return (
     <div className="grid grid-cols-2 gap-4 ">
@@ -73,7 +111,15 @@ function OrderItemCard({ items, orderId, status }: any) {
             <div className="mt-4 flex items-center justify-center">
               <Button
                 loading={false}
-                onClick={() => {}}
+                onClick={() => {
+                  handleClickOpen();
+                  handleUpdateClick({
+                    price: formatCurrency(price),
+                    restaurant: item.restaurant.name,
+                    title: item.title,
+                    quantity: quantity,
+                  });
+                }}
                 type="secondaryGreen"
                 className="ml-2 hover:text-white"
               >
@@ -81,7 +127,9 @@ function OrderItemCard({ items, orderId, status }: any) {
               </Button>
               <Button
                 loading={isRemoving}
-                onClick={() => handleRemoveOrderItem(orderId, item.foodId)}
+                onClick={() =>
+                  handleRemoveOrderItem(orderId, item.foodId, items.length)
+                }
                 type="secondaryRed"
                 className="ml-2 hover:text-white"
               >
@@ -89,6 +137,15 @@ function OrderItemCard({ items, orderId, status }: any) {
               </Button>
             </div>
           )}
+          {/* payment confirmation */}
+          {
+            <PaymentConfirmationBox
+              key={idx}
+              open={open}
+              onClose={handleClose}
+              details={details}
+            />
+          }
         </div>
       ))}
     </div>

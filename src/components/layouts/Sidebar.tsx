@@ -30,7 +30,7 @@ function Sidebar() {
         </div>
         {/* links */}
         <div className="my-8 w-full space-y-1 ">
-          <SidebarButton href="/" Icon={RxDashboard}>
+          <SidebarButton href="/dashboard" Icon={RxDashboard}>
             dashboard
           </SidebarButton>
           <SidebarButton href="/restaurant" Icon={SiCodechef}>
@@ -42,7 +42,7 @@ function Sidebar() {
           <SidebarButton href="/users" Icon={FiUsers}>
             Users &nbsp; &nbsp; &nbsp; &nbsp;
           </SidebarButton>
-          <SidebarButton href="" Icon={GrTransaction}>
+          <SidebarButton href="/transactions" Icon={GrTransaction}>
             Transactions
           </SidebarButton>
         </div>
@@ -61,7 +61,9 @@ export function SidebarButton({ href, Icon, children }: SidebarButtonProps) {
         startIcon={Icon && <Icon />}
         size="large"
         className={` w-full hover:text-primary  ${
-          router.pathname === href ? "bg-primary text-white" : " text-stone-600"
+          router.pathname.includes(href)
+            ? "bg-primary text-white"
+            : " text-stone-600"
         } `}
       >
         {children}

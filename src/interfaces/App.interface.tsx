@@ -34,3 +34,16 @@ export interface FilterProps {
 }
 
 export interface MenuItemListProps extends Array<MenuContextProps> {}
+
+export interface PaymentConfirmationProps {
+  open: boolean;
+  onClose: () => void;
+  details: any;
+}
+
+export interface IntroCardProps {
+  restaurantLen: Number;
+  Sales: Number;
+  ordersLen: Number;
+  usersLen: Number;
+}

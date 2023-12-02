@@ -93,6 +93,7 @@ function useOrdersApi() {
   const removeOrderItemApi = async (orderId: string, itmeId: string) => {
     const removeOrderItemUrl = removeOrderItem(orderId, itmeId);
     try {
+      // alert(orderId + " " + itmeId);
       const res = await axios.put(removeOrderItemUrl, null, {
         headers: {
           Authorization: token ? `Bearer ${token}` : "",

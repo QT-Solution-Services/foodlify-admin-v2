@@ -1,6 +1,7 @@
+import { MiddleStatsProps } from "@/interfaces/App.interface";
 import { duration } from "@mui/material";
 import Link from "next/link";
-import React from "react";
+import React, { use } from "react";
 import {
   ResponsiveContainer,
   PieChart,
@@ -40,35 +41,45 @@ const statusArr = [
   "rejected",
 ];
 
-const startDataLight = [
-  {
-    label: "Restaurants",
-    value: 23,
-    color: "#a855f7",
-  },
-  {
-    label: "Users",
-    value: 276,
-    color: "#3b82f6",
-  },
-  {
-    label: "Orders",
-    value: 54,
-    color: "#eab308",
-  },
-  {
-    label: "Delivered",
-    value: 11,
-    color: "#84cc16",
-  },
-  {
-    label: "Rejected",
-    value: 7,
-    color: "#b91c1c",
-  },
-];
+function MiddleStats({
+  isLoading,
+  restaurantLen,
+  ordersLen,
+  usersLen,
+}: MiddleStatsProps) {
+  let startDataLight = [
+    {
+      label: "Restaurants",
+      value: restaurantLen || 0,
+      color: "#a855f7",
+    },
+    {
+      label: "Users",
+      value: usersLen || 0,
+      color: "#3b82f6",
+    },
+    {
+      label: "Orders",
+      value: ordersLen || 0,
+      color: "#eab308",
+    },
+    {
+      label: "Delivered",
+      value: 11,
+      color: "#84cc16",
+    },
+    {
+      label: "Approved",
+      value: 11,
+      color: "#1628cc",
+    },
+    {
+      label: "Rejected",
+      value: 1,
+      color: "#b91c1c",
+    },
+  ];
 
-function MiddleStats() {
   return (
     <div className="grid grid-cols-2 gap-4 ">
       <div className="relative overflow-y-auto rounded-2xl bg-white px-6 shadow-md">
@@ -89,6 +100,11 @@ function MiddleStats() {
             Overall summary
           </h1>
         </div>
+        {/* {isLoading ? (
+          <p>Loading stats</p>
+        ) : (
+     
+        )} */}
         <ResponsiveContainer width="100%" height={240}>
           <PieChart>
             <Pie
@@ -100,7 +116,7 @@ function MiddleStats() {
               cx="40%"
               cy="50%"
               paddingAngle={3}
-              className="transition-all duration-300 "
+              className=" "
             >
               {startDataLight.map((entry) => (
                 <Cell

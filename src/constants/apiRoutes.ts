@@ -3,6 +3,18 @@ export const loginRoute = `${baseUrl}/api/v1/auth/admin/login`;
 export const resturantsRoute = `${baseUrl}/api/v1/admin/restaurants`;
 export const usersRoutes = `${baseUrl}/api/v1/admin/all_users`;
 export const ordersRoute = `${baseUrl}/api/v1/admin/order`;
+export const transactionsRoute = `${baseUrl}/api/v1/admin/transactions`;
+export const locationsRoute = `${baseUrl}/api/v1/admin/locations`;
+
+// routes on dashboarc
+export const restaurantsCountRoute = `${baseUrl}
+/api/v1/admin/get_restaurant_count_by_location`;
+
+export const ordersCountRoute = `${baseUrl}
+/api/v1/admin/get_order_count_by_location`;
+
+export const usersCountRoute = `${baseUrl}
+/api/v1/admin/get_users_count_by_location`;
 
 // ORDER ACTION
 export const approveOrderRoute = (orderId: string) =>

@@ -85,13 +85,13 @@ function OrdersTable({ orders }: any) {
                     menuListValue={[
                       {
                         menuItem: "see details",
-                        ItemIcon: LiaEye,
+                        ItemIcon: <LiaEye />,
                         naviagte: `/orders/${order.orderId}`,
                       },
                       {
                         menuItem: "more action",
-                        ItemIcon: GrAction,
-                        naviagte: "/users",
+                        ItemIcon: <GrAction />,
+                        naviagte: "/dashboard",
                       },
                     ]}
                   />

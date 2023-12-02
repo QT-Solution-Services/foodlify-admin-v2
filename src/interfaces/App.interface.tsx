@@ -42,8 +42,16 @@ export interface PaymentConfirmationProps {
 }
 
 export interface IntroCardProps {
+  isLoading: boolean;
   restaurantLen: Number;
   Sales: Number;
+  ordersLen: Number;
+  usersLen: Number;
+}
+
+export interface MiddleStatsProps {
+  isLoading: boolean;
+  restaurantLen: Number;
   ordersLen: Number;
   usersLen: Number;
 }

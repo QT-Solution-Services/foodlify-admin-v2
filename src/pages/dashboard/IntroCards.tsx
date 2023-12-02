@@ -1,8 +1,10 @@
+import { SpinnerMini } from "@/components/Button";
 import { IntroCardProps } from "@/interfaces/App.interface";
 import Image from "next/image";
 import React from "react";
 
 function IntroCards({
+  isLoading,
   restaurantLen,
   Sales,
   ordersLen,
@@ -22,7 +24,13 @@ function IntroCards({
         </div>
         <div className="mt-4  text-stone-600">
           <h1 className="text-sm font-bold uppercase">café</h1>
-          <h1 className="text-lighter text-3xl">16</h1>
+          <h1 className="text-lighter text-3xl">
+            {isLoading ? (
+              <SpinnerMini borderColor="border-primary" />
+            ) : (
+              restaurantLen.toString()
+            )}
+          </h1>
         </div>
       </div>
       {/* sales */}
@@ -38,7 +46,16 @@ function IntroCards({
         </div>
         <div className="mt-4  text-stone-600">
           <h1 className="text-sm font-bold">SALES</h1>
-          <h1 className="text-lighter text-3xl">16</h1>
+          <h1 className="text-lighter text-3xl">
+            {isLoading ? (
+              <SpinnerMini
+                borderColor="border-primary"
+                borderColor="border-primary"
+              />
+            ) : (
+              Sales.toString()
+            )}
+          </h1>
         </div>
       </div>
       {/* orders */}
@@ -54,7 +71,13 @@ function IntroCards({
         </div>
         <div className="mt-4  text-stone-600">
           <h1 className="text-sm font-bold">ORDERS</h1>
-          <h1 className="text-lighter text-3xl">16</h1>
+          <h1 className="text-lighter text-3xl">
+            {isLoading ? (
+              <SpinnerMini borderColor="border-primary" />
+            ) : (
+              ordersLen.toString()
+            )}
+          </h1>
         </div>
       </div>
       {/* users */}
@@ -70,7 +93,13 @@ function IntroCards({
         </div>
         <div className="mt-4  text-stone-600">
           <h1 className="text-sm font-bold">USERS</h1>
-          <h1 className="text-lighter text-3xl">16</h1>
+          <h1 className="text-lighter text-3xl">
+            {isLoading ? (
+              <SpinnerMini borderColor="border-primary" />
+            ) : (
+              usersLen.toString()
+            )}
+          </h1>
         </div>
       </div>
     </div>

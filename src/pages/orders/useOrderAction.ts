@@ -59,7 +59,7 @@ export default function useOrderAction() {
     onSuccess: (data: any) => {
       showToast("success", `${data} `);
     },
-    onError: () => showToast("error", "there was an error while approving"),
+    onError: () => showToast("error", "there was an error while removing"),
   });
 
   return {

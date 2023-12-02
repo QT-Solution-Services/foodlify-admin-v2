@@ -1,5 +1,5 @@
 import AppLayout from "@/components/layouts/AppLayout";
-import React from "react";
+import React, { useState } from "react";
 import OrdersTableOperations from "./OrdersTableOperations";
 import useOrders from "./useOrders";
 import { Spinner } from "@/components/Button";
@@ -7,9 +7,11 @@ import { formatOrdersData } from "@/utils/Helper";
 import OrdersTable from "./OrdersTable";
 import Pagination from "@/components/layouts/Pagination";
 import { useRouter } from "next/router";
+import SearchBox from "@/components/SearchBox";
 
 function Index() {
   const router = useRouter();
+  const [search, setSearch] = useState("");
   // initailly filterField would be undefine there we setting it
   !router.query.filterField
     ? (router.query.filterField = "all")
@@ -24,6 +26,7 @@ function Index() {
       ? orders.map((order: any) => formatOrdersData(order))
       : [];
 
+  // filter
   let filterOrders;
   if (router.query.filterField === "all") filterOrders = formatedOrders;
 
@@ -47,6 +50,17 @@ function Index() {
       (order: any) => order.status === "REJECTED",
     );
 
+  // searched
+  let searchedOrder;
+  if (search.length === 0) {
+    searchedOrder = filterOrders;
+  } else {
+    searchedOrder = filterOrders.filter((order: any) =>
+      order.orderId.toLowerCase().includes(search),
+    );
+  }
+  console.log(searchedOrder.length);
+
   return (
     <AppLayout>
       <>
@@ -54,6 +68,7 @@ function Index() {
           <h2 className="  text-3xl font-medium capitalize text-primary">
             All Orders
           </h2>
+          <SearchBox search={search} onSetSearch={setSearch} />
           <OrdersTableOperations />
         </div>
 
@@ -61,7 +76,7 @@ function Index() {
           <p>No orders founds</p>
         ) : (
           <div>
-            <OrdersTable orders={filterOrders} />{" "}
+            <OrdersTable orders={searchedOrder} />
             <Pagination totalPage={total_pages} lastPage={is_last_page} />
           </div>
         )}

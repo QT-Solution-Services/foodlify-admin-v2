@@ -1,15 +1,18 @@
 import AppLayout from "@/components/layouts/AppLayout";
-import React from "react";
+import React, { useState } from "react";
 import TransactionTableOperations from "./TransactionTableOperations";
 import TransactionTable from "./TransactionTable";
 import { Spinner } from "@/components/Button";
 import { useTransaction } from "./useTransaction";
 import { useRouter } from "next/router";
 import Pagination from "@/components/layouts/Pagination";
+import SearchBox from "@/components/SearchBox";
 
 function index() {
   const router = useRouter();
   // initailly filterField would be undefine there we setting it
+  const [search, setSearch] = useState("");
+
   !router.query.filterField
     ? (router.query.filterField = "all")
     : router.query.filterField;
@@ -34,6 +37,16 @@ function index() {
     filterTransactions = transactions.filter((transaction: any) =>
       transaction.title.toLowerCase().includes("order"),
     );
+
+  // searched
+  let searchedTransaction;
+  if (search.length === 0) {
+    searchedTransaction = filterTransactions;
+  } else {
+    searchedTransaction = filterTransactions.filter((transaction: any) =>
+      transaction.transaction_id.toLowerCase().includes(search),
+    );
+  }
   return (
     <AppLayout>
       <>
@@ -41,6 +54,12 @@ function index() {
           <h2 className="  text-3xl font-medium capitalize text-primary">
             All Transactions
           </h2>
+          <SearchBox
+            search={search}
+            onSetSearch={setSearch}
+            tag="transaction id"
+          />
+
           <TransactionTableOperations />
         </div>
 
@@ -48,7 +67,7 @@ function index() {
           <p>No transactions founds</p>
         ) : (
           <div>
-            <TransactionTable transactions={filterTransactions} />
+            <TransactionTable transactions={searchedTransaction} />
             <Pagination totalPage={total_pages} lastPage={is_last_page} />
           </div>
         )}

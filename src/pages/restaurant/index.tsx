@@ -1,5 +1,5 @@
 import AppLayout from "@/components/layouts/AppLayout";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import RestaurantTableOperations from "./RestaurantTableOperations";
 import RestaurantTable from "./RestaurantTable";
 import useRestaurant from "@/hooks/useRestaurant";
@@ -7,9 +7,12 @@ import { Spinner } from "@/components/Button";
 import { formatResturantData } from "@/utils/Helper";
 import Pagination from "@/components/layouts/Pagination";
 import { useRouter } from "next/router";
+import SearchBox from "@/components/SearchBox";
 
 function Index() {
   const router = useRouter();
+  const [search, setSearch] = useState("");
+
   // initailly filterField would be undefine there we setting it
   !router.query.filterField
     ? (router.query.filterField = "all")
@@ -39,6 +42,17 @@ function Index() {
     filterRestaurants = resturantData.filter(
       (restaurant: any) => restaurant.status === "BLOCKED",
     );
+
+  // searched
+  let searchedRestaurant;
+  if (search.length === 0) {
+    searchedRestaurant = filterRestaurants;
+  } else {
+    searchedRestaurant = filterRestaurants.filter((restaurant: any) =>
+      restaurant.name.toLowerCase().includes(search),
+    );
+  }
+
   return (
     <AppLayout>
       <>
@@ -46,6 +60,8 @@ function Index() {
           <h2 className="  text-3xl font-medium capitalize text-primary">
             All Restaurants
           </h2>
+          <SearchBox search={search} onSetSearch={setSearch} tag="name" />
+
           <RestaurantTableOperations />
         </div>
 
@@ -53,7 +69,7 @@ function Index() {
           <p>No restaurants found</p>
         ) : (
           <div>
-            <RestaurantTable restaurants={filterRestaurants} />
+            <RestaurantTable restaurants={searchedRestaurant} />
             {<Pagination totalPage={total_pages} lastPage={is_last_page} />}
           </div>
         )}

@@ -59,7 +59,6 @@ function Index() {
       order.orderId.toLowerCase().includes(search),
     );
   }
-  console.log(searchedOrder.length);
 
   return (
     <AppLayout>
@@ -68,7 +67,7 @@ function Index() {
           <h2 className="  text-3xl font-medium capitalize text-primary">
             All Orders
           </h2>
-          <SearchBox search={search} onSetSearch={setSearch} />
+          <SearchBox search={search} onSetSearch={setSearch} tag="id" />
           <OrdersTableOperations />
         </div>
 

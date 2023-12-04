@@ -103,6 +103,7 @@ function MiddleStats({
           {formatedOrders.map((order: any, idx: any) => (
             <OrderCard key={idx} status={order.status} id={order.orderId} />
           ))}
+          {formatedOrders.length === 0 && <p>No recent orders</p>}
           {/* {[...Array(8)].map((__, idx): any => (
             <OrderCard key={idx} status={statusArr.at(Math.random() * 5)} />
           ))} */}

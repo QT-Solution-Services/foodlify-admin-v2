@@ -46,7 +46,7 @@ function Index() {
 
           <FormTextField
             name="username"
-            defaultValue="admin@foodlify.com"
+            defaultValue="admin@foodlify.com.ng"
             label="Email"
             icontype="email"
             rules={{ required: "Email required" }}
@@ -55,7 +55,7 @@ function Index() {
           <PasswordTextField
             name="password"
             label="Username"
-            defaultValue="password"
+            defaultValue="TheAdmin@foodlify"
             type="password"
             rules={{ required: "Username required" }}
           />

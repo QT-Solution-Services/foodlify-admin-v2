@@ -20,7 +20,7 @@ function Index() {
         <h2 className="  text-3xl font-medium capitalize text-primary">
           Dashbaord
         </h2>
-        <DashboardOperations />
+        {/* <DashboardOperations /> */}
       </div>
       <div className="grid grid-rows-[8rem_19rem_1fr] gap-6">
         <IntroCards

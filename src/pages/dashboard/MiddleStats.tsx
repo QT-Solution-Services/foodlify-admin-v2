@@ -10,6 +10,9 @@ import {
   Tooltip,
   Legend,
 } from "recharts";
+import useOrders from "../orders/useOrders";
+import { formatOrdersData } from "@/utils/Helper";
+import { SpinnerMini } from "@/components/Button";
 const statusColor: any = {
   delivered: {
     text: " mt-auto text-green-600 rounded-full text-bold",
@@ -47,6 +50,12 @@ function MiddleStats({
   ordersLen,
   usersLen,
 }: MiddleStatsProps) {
+  const { body: orders, isLoading: isLoadingOrders } = useOrders();
+  const formatedOrders =
+    orders !== undefined
+      ? orders.map((order: any) => formatOrdersData(order))
+      : [];
+
   let startDataLight = [
     {
       label: "Restaurants",
@@ -85,13 +94,18 @@ function MiddleStats({
       <div className="relative overflow-y-auto rounded-2xl bg-white px-6 shadow-md">
         <div className="sticky top-0 z-10 bg-white py-2">
           <h1 className="text-xl   font-semibold text-stone-800">
-            Today's Orders
+            {/* Today's Orders */}
+            Recent Orders
           </h1>
         </div>
         <div className="mt-6 space-y-4">
-          {[...Array(8)].map((__, idx): any => (
-            <OrderCard key={idx} status={statusArr.at(Math.random() * 5)} />
+          {isLoadingOrders ? <SpinnerMini borderColor="border-primary" /> : ""}
+          {formatedOrders.map((order: any, idx: any) => (
+            <OrderCard key={idx} status={order.status} id={order.orderId} />
           ))}
+          {/* {[...Array(8)].map((__, idx): any => (
+            <OrderCard key={idx} status={statusArr.at(Math.random() * 5)} />
+          ))} */}
         </div>
       </div>
       <div className="relative overflow-y-auto rounded-2xl bg-stone-50 shadow-md">
@@ -143,17 +157,21 @@ function MiddleStats({
 
 export default MiddleStats;
 
-function OrderCard({ status }: any) {
+function OrderCard({ status, id }: any) {
   console.log(status);
   return (
     <div className="flex h-14 items-center justify-between rounded-2xl bg-stone-100 px-1">
       <div className="text-lighter ">
-        <p>id#090897728</p>
+        <p>#{id}</p>
         {/* <h1 className={`${statusColor[status.toLowerCase()]}`}>{status}</h1> */}
-        <h1 className={`${statusColor[status].text}`}>{status}</h1>
+        <h1 className={`${statusColor[status.toLowerCase()]["text"]}`}>
+          {status}
+        </h1>
       </div>
-      <Link href="/orders">
-        <button className={`${statusColor[status].btn}`}>see details</button>
+      <Link href={`/orders/${id}`}>
+        <button className={`${statusColor[status.toLowerCase()]["btn"]}`}>
+          see details
+        </button>
       </Link>
     </div>
   );

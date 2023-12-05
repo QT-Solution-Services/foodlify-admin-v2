@@ -72,21 +72,21 @@ function MiddleStats({
       value: ordersLen || 0,
       color: "#eab308",
     },
-    {
-      label: "Delivered",
-      value: 11,
-      color: "#84cc16",
-    },
-    {
-      label: "Approved",
-      value: 11,
-      color: "#1628cc",
-    },
-    {
-      label: "Rejected",
-      value: 1,
-      color: "#b91c1c",
-    },
+    // {
+    //   label: "Delivered",
+    //   value: 11,
+    //   color: "#84cc16",
+    // },
+    // {
+    //   label: "Approved",
+    //   value: 11,
+    //   color: "#1628cc",
+    // },
+    // {
+    //   label: "Rejected",
+    //   value: 1,
+    //   color: "#b91c1c",
+    // },
   ];
 
   return (

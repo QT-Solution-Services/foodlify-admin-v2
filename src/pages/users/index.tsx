@@ -34,9 +34,11 @@ function Index() {
   if (search.length === 0) {
     searchedUser = filterUsers;
   } else {
-    searchedUser = filterUsers.filter((user: any) =>
-      user.email.toLowerCase().includes(search),
-    );
+    if (filterUsers !== undefined) {
+      searchedUser = filterUsers.filter((user: any) =>
+        user.email.toLowerCase().includes(search),
+      );
+    }
   }
 
   return (

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 
 import Button, { SpinnerMini } from "@/components/Button";
 import FormTextField from "@/components/formComponents/FormTextField";
@@ -22,6 +22,7 @@ function Index() {
       },
     });
   }
+
   return (
     <div className="my-20 grid  grid-cols-12 gap-6 px-20">
       <div className="col-span-8 ">
@@ -38,26 +39,28 @@ function Index() {
       <FormProvider {...formMethods}>
         <form
           onSubmit={formMethods.handleSubmit(onSubmit)}
-          className="col-span-4  "
+          className="col-span-4 "
         >
-          <h1 className=" mb-4 text-center text-3xl font-semibold text-primary">
+          <h1 className="mb-4 text-center text-3xl font-semibold text-primary ">
             Foodlify Admin
           </h1>
 
           <FormTextField
             name="username"
-            defaultValue="admin@foodlify.com.ng"
+            // defaultValue="admin@foodlify.com.ng"
             label="Email"
+            placeholder="Enter your email"
             icontype="email"
             rules={{ required: "Email required" }}
           />
 
           <PasswordTextField
             name="password"
-            label="Username"
-            defaultValue="TheAdmin@foodlify"
+            label="Passord"
+            // defaultValue="TheAdmin@foodlify"
             type="password"
-            rules={{ required: "Username required" }}
+            placeholder="Enter your password"
+            rules={{ required: "Password required" }}
           />
           <div className="mb-2 mt-12 text-primary">
             <Link href="/">Forget Password? </Link>

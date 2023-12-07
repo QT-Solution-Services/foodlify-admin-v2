@@ -2,6 +2,7 @@ import React from "react";
 import { IconButton, InputAdornment, TextField } from "@mui/material";
 import { useFormContext, Controller } from "react-hook-form";
 import { FiUser, FiMail, FiLock } from "react-icons/fi";
+import { useTheme } from "next-themes";
 
 export default function FormTextField({
   name,
@@ -15,6 +16,8 @@ export default function FormTextField({
     control,
     formState: { errors },
   } = useFormContext();
+  const { theme } = useTheme();
+  const isDark = theme === "light" ? false : true;
 
   const iconTypeToComponentMap: any = {
     email: FiMail,
@@ -48,6 +51,8 @@ export default function FormTextField({
         <TextField
           {...field}
           {...props}
+          color="warning"
+          placeholder={props.placeholder}
           label={label}
           type={type ? type : " "}
           error={!!errors[name]}
@@ -60,6 +65,7 @@ export default function FormTextField({
           InputProps={{
             startAdornment: renderInputAdornment(props.icontype),
             disabled: props.disable && props.disable,
+            sx: { color: isDark ? "white" : "#374151" },
           }}
         />
       )}

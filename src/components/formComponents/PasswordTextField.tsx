@@ -2,6 +2,7 @@ import React from "react";
 import { TextField, InputAdornment, IconButton } from "@mui/material";
 import { useFormContext, Controller } from "react-hook-form";
 import { RxEyeOpen, RxEyeClosed, RxLockClosed } from "react-icons/rx";
+import { useTheme } from "next-themes";
 
 export default function PasswordTextField({
   name,
@@ -14,6 +15,8 @@ export default function PasswordTextField({
     control,
     formState: { errors },
   } = useFormContext();
+  const { theme } = useTheme();
+  const isDark = theme === "light" ? false : true;
 
   const [showPassword, setShowPassword] = React.useState(true);
 
@@ -48,6 +51,8 @@ export default function PasswordTextField({
           {...field}
           {...props}
           label={label}
+          color="warning"
+          placeholder={props.placeholder}
           type={showPassword ? "password" : "text"}
           error={!!errors[name]}
           helperText={errors[name]?.message}
@@ -55,10 +60,13 @@ export default function PasswordTextField({
           margin="normal"
           defaultValue={props.defaultValue ? props.defaultValue : null}
           InputProps={{
+            sx: { color: isDark ? "white" : "#374151" },
             endAdornment: renderInputAdornment(),
             startAdornment: (
               <InputAdornment position="start">
-                <RxLockClosed />{" "}
+                <IconButton edge="start">
+                  <RxLockClosed />
+                </IconButton>
               </InputAdornment>
             ),
           }}

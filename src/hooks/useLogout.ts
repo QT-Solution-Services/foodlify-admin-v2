@@ -11,7 +11,7 @@ export default function useLogout() {
     CookieService.remover("user_data");
     setAuthToken("");
     setAdminDetails(null);
-    router.push("/login");
+    router.push("/");
   };
   return {
     handleLogout,

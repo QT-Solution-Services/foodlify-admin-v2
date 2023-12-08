@@ -10,7 +10,7 @@ import {
   Tooltip,
   Legend,
 } from "recharts";
-import useOrders from "../orders/useOrders";
+import useOrders from "../../hooks/orders/useOrders";
 import { formatOrdersData } from "@/utils/Helper";
 import { SpinnerMini } from "@/components/Button";
 const statusColor: any = {

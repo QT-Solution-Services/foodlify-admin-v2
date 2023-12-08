@@ -3,13 +3,13 @@ import AppLayout from "@/components/layouts/AppLayout";
 import { formatCurrency, formatDate } from "@/utils/Helper";
 import { useRouter } from "next/router";
 import React, { useContext } from "react";
-import useSingleOrder from "../useSingleOrder";
+import useSingleOrder from "../../../hooks/orders/useSingleOrder";
 import { Divider } from "@mui/material";
-import OrderItemBox from "../OrderItemBox";
-import OrderDeliveryAddress from "../OrderDeliveryAddress";
-import useOrderAction from "../useOrderAction";
+import OrderItemBox from "@/components/orders/OrderItemBox";
+import OrderDeliveryAddress from "@/components/orders/OrderDeliveryAddress";
+import useOrderAction from "../../../hooks/orders/useOrderAction";
 import { ToastContext } from "@/contexts/Toast.context";
-import OrderItemCard from "../OrderItemCard";
+import OrderItemCard from "@/components/orders/OrderItemCard";
 import { testData } from "@/constants/data";
 
 const statusColor: any = {

@@ -3,7 +3,7 @@ import { Tooltip } from "@mui/material";
 import Image from "next/image";
 import Button from "@/components/Button";
 import { formatCurrency } from "@/utils/Helper";
-import useOrderAction from "./useOrderAction";
+import useOrderAction from "../../hooks/orders/useOrderAction";
 import { useQueryClient } from "@tanstack/react-query";
 import { ToastContext } from "@/contexts/Toast.context";
 import PaymentConfirmationBox from "@/components/PaymentConfirmationBox";
@@ -38,7 +38,7 @@ function OrderItemCard({ items, orderId, status }: any) {
         {
           onSuccess: () => {
             // eslint-disable-next-line no-use-before-define
-            queryClient.invalidateQueries({ active: true });
+            queryClient.invalidateQueries();
           },
         },
       );

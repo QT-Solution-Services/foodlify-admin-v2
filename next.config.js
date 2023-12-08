@@ -4,7 +4,7 @@ const nextConfig = {
     domains: ["foodlify-files.s3.amazonaws.com"],
   },
   typescript: {
-    ignoreBuildErrors: true,
+    ignoreBuildErrors: false,
   },
 };
 

@@ -1,4 +1,4 @@
-import { usersRoutes } from "@/constants/apiRoutes";
+import { transactionsRoute } from "@/constants/apiRoutes";
 import { AuthContext } from "@/contexts/Auth.context";
 import { ToastContext } from "@/contexts/Toast.context";
 import { useQuery } from "@tanstack/react-query";
@@ -6,20 +6,20 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import { useContext } from "react";
 
-export function useUsers() {
+const useTransaction = () => {
   const { showToast } = useContext(ToastContext);
   const { token } = useContext(AuthContext);
   const router = useRouter();
   const page = router.query.page || 0;
-  const location = router.query.location || "zaria";
+  //   const location = router.query.location || "zaria";
 
-  const fetchUsers = async () => {
+  const fetchTransactions = async () => {
     try {
-      const res = await axios.get(usersRoutes, {
+      const res = await axios.get(transactionsRoute, {
         headers: {
           Authorization: token ? `Bearer ${token}` : "",
         },
-        params: { page, location },
+        params: { page },
       });
       if (res.data) {
         console.log(res.data);
@@ -31,7 +31,9 @@ export function useUsers() {
       showToast(
         "error",
         `${
-          status === 404 ? "No users in the location yet!" : "an error occured"
+          status === 404
+            ? "No transactions in the location yet!"
+            : "an error occured"
         } `,
       );
     }
@@ -39,8 +41,8 @@ export function useUsers() {
 
   const { isLoading, data: { is_last_page, total_pages, body } = {} } =
     useQuery({
-      queryKey: ["users", page, location],
-      queryFn: fetchUsers,
+      queryKey: ["transactions", page],
+      queryFn: fetchTransactions,
     });
 
   return {
@@ -49,4 +51,6 @@ export function useUsers() {
     total_pages,
     body,
   };
-}
+};
+
+export default useTransaction;

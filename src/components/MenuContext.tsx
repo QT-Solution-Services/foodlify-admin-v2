@@ -6,13 +6,12 @@ import { IconButton, ListItemIcon } from "@mui/material";
 import { RxDotsVertical } from "react-icons/rx";
 import { useRouter } from "next/router";
 import { MenuContextProps } from "@/interfaces/App.interface";
-import { useBlockRestaurant } from "@/pages/restaurant/useBlockRestaurant";
-import { useBlockUser } from "@/pages/users/useBlockUser";
+import useBlockRestaurant from "@/hooks/restaurants/useBlockRestaurant";
+import useBlockUser from "@/hooks/users/useBlockUser";
 import { useQueryClient } from "@tanstack/react-query";
 
 export default function MenuAction({ menuListValue }: any) {
   const router = useRouter();
-  const queryClient = useQueryClient();
 
   const { blockRestaurant, unBlockRestaurant, isLoading } =
     useBlockRestaurant();
@@ -30,33 +29,17 @@ export default function MenuAction({ menuListValue }: any) {
 
   function handleMeunApiRequests(lable: string, value: string) {
     if (lable === "blockRestaurant") {
-      blockRestaurant(value, {
-        onSuccess: () => {
-          queryClient.invalidateQueries({ active: true });
-        },
-      });
+      blockRestaurant(value);
     }
     if (lable === "unBlockRestaurant") {
       alert("unblock " + value);
-      unBlockRestaurant(value, {
-        onSuccess: () => {
-          queryClient.invalidateQueries({ active: true });
-        },
-      });
+      unBlockRestaurant(value);
     }
     if (lable === "blockUser") {
-      blockUser(value, {
-        onSuccess: () => {
-          queryClient.invalidateQueries({ active: true });
-        },
-      });
+      blockUser(value);
     }
     if (lable === "unBlockUser") {
-      unBlockUser(value, {
-        onSuccess: () => {
-          queryClient.invalidateQueries({ active: true });
-        },
-      });
+      unBlockUser(value);
     }
   }
 

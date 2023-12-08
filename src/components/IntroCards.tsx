@@ -48,10 +48,7 @@ function IntroCards({
           <h1 className="text-sm font-bold">SALES</h1>
           <h1 className="text-lighter text-3xl">
             {isLoading ? (
-              <SpinnerMini
-                borderColor="border-primary"
-                borderColor="border-primary"
-              />
+              <SpinnerMini borderColor="border-primary" />
             ) : (
               Sales.toString()
             )}

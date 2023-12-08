@@ -1,6 +1,6 @@
 import AppLayout from "@/components/layouts/AppLayout";
 import React, { useState } from "react";
-import { useUsers } from "./useUsers";
+import useUsers from "../../hooks/users/useUsers";
 import { Spinner } from "@/components/Button";
 import UserTableOperations from "./UserTableOperations";
 import UserTables from "./UsersTable";

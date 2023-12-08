@@ -2,7 +2,7 @@ import AppLayout from "@/components/layouts/AppLayout";
 import React, { useEffect, useState } from "react";
 import RestaurantTableOperations from "./RestaurantTableOperations";
 import RestaurantTable from "./RestaurantTable";
-import useRestaurant from "@/hooks/useRestaurant";
+import useRestaurant from "@/hooks/restaurants/useRestaurant";
 import { Spinner } from "@/components/Button";
 import { formatResturantData } from "@/utils/Helper";
 import Pagination from "@/components/layouts/Pagination";

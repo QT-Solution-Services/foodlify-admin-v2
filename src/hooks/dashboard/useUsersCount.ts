@@ -1,20 +1,19 @@
-import { ordersCountRoute } from "@/constants/apiRoutes";
+import { usersCountRoute } from "@/constants/apiRoutes";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import axios from "axios";
 import { useContext } from "react";
 import { AuthContext } from "@/contexts/Auth.context";
 import { ToastContext } from "@/contexts/Toast.context";
-
-export default function useOrdersCount() {
+const useUsersCount = () => {
   const { token } = useContext(AuthContext);
   const { showToast } = useContext(ToastContext);
   const router = useRouter();
   const location = router.query.location || "zaria";
 
-  const fetchOrderCount = async () => {
+  const fetchUsersCount = async () => {
     try {
-      const res = await axios.get(ordersCountRoute, {
+      const res = await axios.get(usersCountRoute, {
         headers: {
           Authorization: token ? `Bearer ${token}` : "",
         },
@@ -25,7 +24,7 @@ export default function useOrdersCount() {
       }
       return null;
     } catch (err) {
-      showToast("error", "An error occured while fetching order count");
+      showToast("error", "An error occured while fetching user count");
       console.log("error", `and error ${err}`);
     }
   };
@@ -36,10 +35,12 @@ export default function useOrdersCount() {
     data: { body } = {},
   } = useQuery({
     queryKey: ["restaurant-count", location],
-    queryFn: fetchOrderCount,
+    queryFn: fetchUsersCount,
   });
   return {
     body,
     isLoading,
   };
-}
+};
+
+export default useUsersCount;

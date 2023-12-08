@@ -1,7 +1,7 @@
 import AppLayout from "@/components/layouts/AppLayout";
 import React, { useState } from "react";
 import OrdersTableOperations from "./OrdersTableOperations";
-import useOrders from "./useOrders";
+import useOrders from "../../hooks/orders/useOrders";
 import { Spinner } from "@/components/Button";
 import { formatOrdersData } from "@/utils/Helper";
 import OrdersTable from "./OrdersTable";

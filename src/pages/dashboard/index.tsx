@@ -1,13 +1,12 @@
 import React from "react";
 import AppLayout from "@/components/layouts/AppLayout";
-import IntroCards from "./IntroCards";
+import IntroCards from "../../components/IntroCards";
 import MiddleStats from "./MiddleStats";
 import TransactionsChart from "./TransactionsChart";
 import DashboardOperations from "./DashboardOperations";
-import useRestaurant from "@/hooks/useRestaurant";
-import useRestaurantsCount from "./useRestaurantsCount";
-import useOrdersCount from "./useOrdersCount";
-import useUsersCount from "./useUsersCount";
+import useRestaurantsCount from "../../hooks/dashboard/useRestaurantsCount";
+import useOrdersCount from "../../hooks/dashboard/useOrdersCount";
+import useUsersCount from "../../hooks/dashboard/useUsersCount";
 
 function Index() {
   const { body: restaurants, isLoading } = useRestaurantsCount();

@@ -4,13 +4,14 @@ import {
 } from "@/constants/apiRoutes";
 import { AuthContext } from "@/contexts/Auth.context";
 import { ToastContext } from "@/contexts/Toast.context";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { useContext } from "react";
 
-export function useBlockRestaurant() {
+const useBlockRestaurant = () => {
   const { token } = useContext(AuthContext);
   const { showToast } = useContext(ToastContext);
+  const queryClient = useQueryClient();
 
   const blockRestaurantApi = async (restaurantId: string) => {
     const blockRestaurantUrl = blockRestaurantRoute(restaurantId);
@@ -54,6 +55,7 @@ export function useBlockRestaurant() {
     mutationFn: (restaurantId: string) => blockRestaurantApi(restaurantId),
     onSuccess: (data) => {
       showToast("success", `${data} `);
+      queryClient.invalidateQueries();
     },
     onError: () =>
       showToast("error", "there was an error while disabling restaurant"),
@@ -63,6 +65,7 @@ export function useBlockRestaurant() {
     mutationFn: (restaurantId: string) => unBlockRestaurantApi(restaurantId),
     onSuccess: (data) => {
       showToast("success", `${data} `);
+      queryClient.invalidateQueries();
     },
     onError: () =>
       showToast("error", "there was an error while unblocking restaurant"),
@@ -73,4 +76,6 @@ export function useBlockRestaurant() {
     unBlockRestaurant,
     isLoading,
   };
-}
+};
+
+export default useBlockRestaurant;

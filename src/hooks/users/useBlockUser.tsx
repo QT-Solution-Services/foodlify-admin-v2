@@ -1,13 +1,14 @@
 import { blockUserRoute, unBlockUserRoute } from "@/constants/apiRoutes";
 import { AuthContext } from "@/contexts/Auth.context";
 import { ToastContext } from "@/contexts/Toast.context";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { useContext } from "react";
 
-export function useBlockUser() {
+const useBlockUser = () => {
   const { token } = useContext(AuthContext);
   const { showToast } = useContext(ToastContext);
+  const queryClient = useQueryClient();
 
   const blockUserApi = async (username: string) => {
     const blockUserUrl = blockUserRoute(username);
@@ -47,6 +48,7 @@ export function useBlockUser() {
     mutationFn: (username: string) => blockUserApi(username),
     onSuccess: (data) => {
       showToast("success", `${data} `);
+      queryClient.invalidateQueries();
     },
     onError: () =>
       showToast("error", "there was an error while disabling user"),
@@ -56,6 +58,7 @@ export function useBlockUser() {
     mutationFn: (username: string) => unBlockUserApi(username),
     onSuccess: (data) => {
       showToast("success", `${data} `);
+      queryClient.invalidateQueries();
     },
     onError: () =>
       showToast("error", "there was an error while unblocking user"),
@@ -66,4 +69,6 @@ export function useBlockUser() {
     unBlockUser,
     isLoading,
   };
-}
+};
+
+export default useBlockUser;

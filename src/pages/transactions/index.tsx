@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import TransactionTableOperations from "./TransactionTableOperations";
 import TransactionTable from "./TransactionTable";
 import { Spinner } from "@/components/Button";
-import { useTransaction } from "./useTransaction";
+import useTransaction from "../../hooks/transactions/useTransaction";
 import { useRouter } from "next/router";
 import Pagination from "@/components/layouts/Pagination";
 import SearchBox from "@/components/SearchBox";

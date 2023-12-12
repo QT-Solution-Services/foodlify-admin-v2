@@ -43,7 +43,7 @@ export default function useAuthQuery() {
       });
     },
     onError: (error) => {
-      showToast("error", `invalide username or password`);
+      showToast("error", `invalid username or password`);
     },
   });
 

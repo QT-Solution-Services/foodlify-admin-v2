@@ -28,7 +28,7 @@ function IntroCards({
             {isLoading ? (
               <SpinnerMini borderColor="border-primary" />
             ) : (
-              restaurantLen.toString()
+              restaurantLen?.toString()
             )}
           </h1>
         </div>
@@ -50,7 +50,7 @@ function IntroCards({
             {isLoading ? (
               <SpinnerMini borderColor="border-primary" />
             ) : (
-              Sales.toString()
+              Sales?.toString()
             )}
           </h1>
         </div>
@@ -72,7 +72,7 @@ function IntroCards({
             {isLoading ? (
               <SpinnerMini borderColor="border-primary" />
             ) : (
-              ordersLen.toString()
+              ordersLen?.toString()
             )}
           </h1>
         </div>
@@ -94,7 +94,7 @@ function IntroCards({
             {isLoading ? (
               <SpinnerMini borderColor="border-primary" />
             ) : (
-              usersLen.toString()
+              usersLen?.toString()
             )}
           </h1>
         </div>

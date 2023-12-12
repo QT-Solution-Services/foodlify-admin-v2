@@ -9,6 +9,7 @@ import { ToastContext } from "@/contexts/Toast.context";
 import { useRouter } from "next/router";
 import useLogout from "@/hooks/useLogout";
 import { AuthContext } from "@/contexts/Auth.context";
+import Spinner from "../Spinner";
 
 function AppLayout({ children }: AppLayoutProps) {
   const { isLoading, data: isValidToken } = usePing();
@@ -17,18 +18,23 @@ function AppLayout({ children }: AppLayoutProps) {
   const { userData } = useContext(AuthContext);
   const { handleLogout } = useLogout();
   useEffect(() => {
+    if (userData === null && typeof window !== "undefined") {
+      handleLogout();
+    }
     if (userData === null || (!isLoading && !isValidToken)) {
       handleLogout();
       showToast("error", "Your session has expired. Please log in again");
     }
-  }, []);
+  }, [isLoading]);
 
   return (
-    <div className="grid max-h-screen grid-cols-[19rem_1fr] grid-rows-[auto_1fr]">
-      <Header />
-      <Sidebar />
-      <Main>{children}</Main>
-    </div>
+    <>
+      <div className="grid max-h-screen grid-cols-[19rem_1fr] grid-rows-[auto_1fr]">
+        <Header />
+        <Sidebar />
+        <Main>{children}</Main>
+      </div>
+    </>
   );
 }
 

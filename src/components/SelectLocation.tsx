@@ -29,7 +29,7 @@ function SelectLocation() {
           onChange={handleChangeLocation}
           className="w-[200px] rounded-md border border-stone-400 bg-white px-4 py-2 text-primary outline-none focus:border-primary "
         >
-          {locations.map((location: any) => (
+          {locations?.map((location: any) => (
             <option value={location.toLowerCase()}>{location}</option>
           ))}
         </select>

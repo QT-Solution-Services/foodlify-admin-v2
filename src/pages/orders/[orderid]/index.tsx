@@ -52,6 +52,8 @@ function Index() {
   //   totalOrderPrice,
   // } = testData;
 
+  if (!isLoading && data === undefined) return;
+
   const {
     address,
     deliveryFee,

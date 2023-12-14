@@ -25,7 +25,7 @@ function AppLayout({ children }: AppLayoutProps) {
       handleLogout();
       showToast("error", "Your session has expired. Please log in again");
     }
-  }, [isLoading]);
+  }, []);
 
   return (
     <>

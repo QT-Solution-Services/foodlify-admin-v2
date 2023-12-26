@@ -13,6 +13,7 @@ import {
 import useOrders from "../../hooks/orders/useOrders";
 import { formatOrdersData } from "@/utils/Helper";
 import { SpinnerMini } from "@/components/Button";
+
 const statusColor: any = {
   delivered: {
     text: " mt-auto text-green-600 rounded-full text-bold",
@@ -33,6 +34,10 @@ const statusColor: any = {
   rejected: {
     text: "text-red-600  mt-auto rounded-full",
     btn: " h-8 rounded-full bg-red-600 px-4 py-0 text-white hover:scale-105 hover:shadow-md hover:transition-all hover:duration-300",
+  },
+  canceled: {
+    text: "text-rose-400  mt-auto rounded-full",
+    btn: " h-8 rounded-full bg-rose-400 px-4 py-0 text-white hover:scale-105 hover:shadow-md hover:transition-all hover:duration-300",
   },
 };
 
@@ -159,7 +164,7 @@ function MiddleStats({
 export default MiddleStats;
 
 function OrderCard({ status, id }: any) {
-  console.log(status);
+  // console.log(status);
   return (
     <div className="flex h-14 items-center justify-between rounded-2xl bg-stone-100 px-1">
       <div className="text-lighter ">

@@ -42,7 +42,7 @@ function Index() {
           className="col-span-4 "
         >
           <h1 className="mb-4 text-center text-3xl font-semibold text-primary ">
-            Foodlify Admin
+            Foodlify Admins
           </h1>
 
           <FormTextField

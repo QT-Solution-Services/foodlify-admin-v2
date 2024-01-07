@@ -32,7 +32,7 @@ export default function MenuAction({ menuListValue }: any) {
       blockRestaurant(value);
     }
     if (lable === "unBlockRestaurant") {
-      alert("unblock " + value);
+      alert("unblock restaurant with id " + value);
       unBlockRestaurant(value);
     }
     if (lable === "blockUser") {
@@ -44,13 +44,13 @@ export default function MenuAction({ menuListValue }: any) {
   }
 
   function handleMenuActions(listItem: MenuContextProps) {
-    if (listItem.menuItem && listItem.menuItem === "Block") {
+    if (listItem.menuItem && listItem.menuItem === "Disabled") {
       listItem.restaurantId &&
         handleMeunApiRequests("blockRestaurant", listItem.restaurantId);
       listItem.userName &&
         handleMeunApiRequests("blockUser", listItem.userName);
     }
-    if (listItem.menuItem && listItem.menuItem === "UnBlock") {
+    if (listItem.menuItem && listItem.menuItem === "Unblock") {
       listItem.restaurantId &&
         handleMeunApiRequests("unBlockRestaurant", listItem.restaurantId);
       listItem.userName &&

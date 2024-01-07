@@ -89,7 +89,9 @@ function RestaurantTable({ restaurants }: any) {
                     menuListValue={[
                       {
                         menuItem: `${
-                          restaurant.status === "BLOCKED" ? "UnBlock" : "Block"
+                          restaurant.status === "ACTIVE"
+                            ? "Disabled"
+                            : "Unblock"
                         }`,
                         ItemIcon: <MdOutlineUpdateDisabled />,
                         restaurantId: `${restaurant.restaurant_id}`,

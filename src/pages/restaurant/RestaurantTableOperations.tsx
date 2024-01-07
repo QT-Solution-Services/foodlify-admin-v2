@@ -10,7 +10,7 @@ function RestaurantTableOperations() {
         options={[
           { filterField: "all", lable: "All" },
           { filterField: "ACTIVE", lable: "Active" },
-          { filterField: "BLOCKED", lable: "Blocked" },
+          { filterField: "DISABLED", lable: "Disabled" },
         ]}
       />
       {/* <SortBy /> */}

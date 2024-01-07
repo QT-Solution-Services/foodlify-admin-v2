@@ -43,7 +43,17 @@ export default function useOrders() {
     queryKey: ["orders", page, location],
     queryFn: fetchOrders,
     // refetchInterval: 2000,
-    //
+    // onSuccess: (data) => {  this was supposed to be for getting the last data in the last page consumed by most recent orders in MIddlestat component
+    //   // Check if total_pages is greater than 1 and update the page variable accordingly
+    //   if (total_pages > 1 && page !== total_pages - 1) {
+    //     router.push({
+    //       pathname: router.pathname,
+    //       query: { ...router.query, page: total_pages - 1 },
+    //     });
+    //     // Refetch the data for the new page
+    //     // refetch();
+    //   }
+    // },
   });
 
   return {

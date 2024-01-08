@@ -26,7 +26,9 @@ export interface MenuContextProps {
   naviagte?: string;
   restaurantId: string;
   restaurantName: string;
+  foodId: string;
   userName: string;
+  openDialogueBox?: React.ReactNode;
 }
 
 export interface FilterProps {

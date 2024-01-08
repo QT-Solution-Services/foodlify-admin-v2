@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.input-style {
+  @apply h-[40px] w-full rounded-md bg-[#f0d5c299] text-center text-2xl text-primary outline-none placeholder:text-gray-400 focus:outline focus:outline-offset-[3px] focus:outline-primary;
+}

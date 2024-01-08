@@ -1,6 +1,7 @@
 import {
-  foodByRestaurantRoute,
-  unBlockRestaurantRoute,
+  updateFoodPriceRoute,
+  updateFoodNameRoute,
+  deactiavteFoodRoute,
   blockRestaurantRoute,
 } from "@/constants/apiRoutes";
 import { AuthContext } from "@/contexts/Auth.context";
@@ -21,13 +22,14 @@ const useFoodByRestaurant = () => {
   const page = router.query.page || 0;
 
   const fetchFoodByRestaurantApi = async () => {
+    const publicUrl = `http://34.225.48.149:8090/api/v1/public/food_by_restaurant`;
     try {
-      const res = await axios.get(foodByRestaurantRoute, {
+      const res = await axios.get(publicUrl, {
         params: { location, restaurant_id, page },
       });
       if (res) {
-        console.log(res);
-        return res.data.message;
+        // console.log(res);
+        return res.data;
       }
     } catch (error) {
       console.log("the error occured", error);
@@ -35,11 +37,11 @@ const useFoodByRestaurant = () => {
     }
   };
 
-  const unBlockRestaurantApi = async (restaurantId: string) => {
-    const unBlockRestaurantUrl = unBlockRestaurantRoute(restaurantId);
+  const deactivateFoodApi = async (foodId: string) => {
+    const deactivateFoodUrl = deactiavteFoodRoute(foodId);
 
     try {
-      const res = await axios.put(unBlockRestaurantUrl, null, {
+      const res = await axios.put(deactivateFoodUrl, null, {
         headers: {
           Authorization: token ? `Bearer ${token}` : "",
         },
@@ -50,7 +52,47 @@ const useFoodByRestaurant = () => {
       }
     } catch (error) {
       console.error(error);
-      throw new Error("Could not un-disable restaurant ");
+      throw new Error("Could not de-activate food ");
+    }
+  };
+
+  // update price
+  const updateFoodPriceApi = async (foodId: string, price: string) => {
+    const updateFoodPriceUrl = updateFoodPriceRoute(foodId, price);
+
+    try {
+      const res = await axios.put(updateFoodPriceUrl, null, {
+        headers: {
+          Authorization: token ? `Bearer ${token}` : "",
+        },
+      });
+      if (res) {
+        console.log(res);
+        return res.data.message;
+      }
+    } catch (error) {
+      console.error(error);
+      throw new Error("Could not update food price");
+    }
+  };
+
+  // update name
+  const updateFoodNameApi = async (foodId: string, name: string) => {
+    const updateFoodNameUrl = updateFoodNameRoute(foodId, name);
+
+    try {
+      const res = await axios.put(updateFoodNameUrl, null, {
+        headers: {
+          Authorization: token ? `Bearer ${token}` : "",
+        },
+      });
+      if (res) {
+        console.log(res);
+        return res.data.message;
+      }
+    } catch (error) {
+      console.error(error);
+      throw new Error("Could not update food price");
     }
   };
 
@@ -63,21 +105,49 @@ const useFoodByRestaurant = () => {
     queryFn: fetchFoodByRestaurantApi,
   });
 
-  const { mutate: unBlockRestaurant } = useMutation({
-    mutationFn: (restaurantId: string) => unBlockRestaurantApi(restaurantId),
+  const { mutate: deActivateFood } = useMutation({
+    mutationFn: (foodId: string) => deactivateFoodApi(foodId),
     onSuccess: (data) => {
       showToast("success", `${data} `);
       queryClient.invalidateQueries();
     },
     onError: () =>
-      showToast("error", "there was an error while unblocking restaurant"),
+      showToast("error", "there was an error while deactivating food"),
+  });
+
+  // change price
+  const { mutate: updateFoodPrice, isLoading: isUpdatingPrice } = useMutation({
+    mutationFn: ({ foodId, price }: any) => updateFoodPriceApi(foodId, price),
+    onSuccess: (data) => {
+      showToast("success", `${data} `);
+      queryClient.invalidateQueries();
+      router.back();
+    },
+    onError: () =>
+      showToast("error", "there was an error while updating food price"),
+  });
+
+  // change price
+  const { mutate: updateFoodName, isLoading: isUpdatingName } = useMutation({
+    mutationFn: ({ foodId, name }: any) => updateFoodNameApi(foodId, name),
+    onSuccess: (data) => {
+      showToast("success", `${data} `);
+      queryClient.invalidateQueries();
+      router.back();
+    },
+    onError: () =>
+      showToast("error", "there was an error while updating food name"),
   });
 
   return {
     is_last_page,
     total_pages,
     body,
-    unBlockRestaurant,
+    deActivateFood,
+    updateFoodPrice,
+    updateFoodName,
+    isUpdatingPrice,
+    isUpdatingName,
     isLoading,
   };
 };

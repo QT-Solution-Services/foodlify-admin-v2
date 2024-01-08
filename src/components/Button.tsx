@@ -24,6 +24,7 @@ export default function Button({
   return (
     <button
       {...props}
+      type={props.actionType}
       className={`${styles[type]} ${className}  ${
         loading ? "cursor-not-allowed opacity-50" : ""
       }  `}

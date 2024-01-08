@@ -9,20 +9,14 @@ import Paper from "@mui/material/Paper";
 import MenuAction from "@/components/MenuContext";
 import Image from "next/image";
 import { GoListOrdered } from "react-icons/go";
+
 import { MenuItemListProps } from "@/interfaces/App.interface";
 
 import { MdOutlineUpdateDisabled } from "react-icons/md";
+import { FiEdit } from "react-icons/fi";
 
-// const menuListValue: MenuItemListProps = [
-//   {
-//     menuItem: "disable",
-//     ItemIcon: MdOutlineUpdateDisabled,
-//     naviagte: "/users",
-//   },
-// ];
-
-function FoodTable({ restaurants }: any) {
-  if (!restaurants || restaurants.length === 0) return <p>No result found</p>;
+function FoodTable({ foods }: any) {
+  if (!foods || foods.length === 0) return <p>No result found</p>;
 
   return (
     <>
@@ -34,23 +28,20 @@ function FoodTable({ restaurants }: any) {
                 &nbsp;
               </TableCell>
               <TableCell align="center" sx={{ fontWeight: 800, fontSize: 18 }}>
-                Name
+                Category
               </TableCell>
 
               <TableCell align="center" sx={{ fontWeight: 800, fontSize: 18 }}>
-                Close
+                Title
               </TableCell>
               <TableCell align="center" sx={{ fontWeight: 800, fontSize: 18 }}>
-                Status
+                Price
               </TableCell>
               <TableCell align="center" sx={{ fontWeight: 800, fontSize: 18 }}>
-                Number
+                Description
               </TableCell>
               <TableCell align="center" sx={{ fontWeight: 800, fontSize: 18 }}>
-                Location
-              </TableCell>
-              <TableCell align="center" sx={{ fontWeight: 800, fontSize: 18 }}>
-                Address
+                isKitchen
               </TableCell>
               <TableCell align="center" sx={{ fontWeight: 800, fontSize: 18 }}>
                 &nbsp;
@@ -58,7 +49,7 @@ function FoodTable({ restaurants }: any) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {restaurants.map((restaurant: any, idx: any) => (
+            {foods.map((food: any, idx: any) => (
               <TableRow
                 key={idx}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -66,7 +57,7 @@ function FoodTable({ restaurants }: any) {
                 <TableCell component="th" scope="row">
                   <div style={{ width: "60px", height: "60px" }}>
                     <Image
-                      src={restaurant.logo}
+                      src={food.image}
                       alt="logo"
                       width={120}
                       height={120}
@@ -74,32 +65,31 @@ function FoodTable({ restaurants }: any) {
                     />
                   </div>
                 </TableCell>
-                <TableCell align="center">{restaurant.name}</TableCell>
+                <TableCell align="center">{food.category}</TableCell>
                 <TableCell align="center" sx={{ minWidth: 100 }}>
-                  {restaurant.close_time}
+                  {food.title}
                 </TableCell>
-                <TableCell align="center">{restaurant.status}</TableCell>
-                <TableCell align="center">{restaurant.number}</TableCell>
-                <TableCell align="center">{restaurant.location}</TableCell>
-                <TableCell align="center" sx={{ fontSize: 12 }}>
-                  {restaurant.address}
+                <TableCell align="center">{food.price}</TableCell>
+                <TableCell align="center">{food.description}</TableCell>
+                <TableCell align="center">
+                  {food.forKitchen ? "True" : "False"}
                 </TableCell>
                 <TableCell align="center">
                   <MenuAction
                     menuListValue={[
                       {
                         menuItem: `${
-                          restaurant.status === "ACTIVE"
-                            ? "Disabled"
-                            : "Unblock"
+                          // food.status === true ? "Deactivate" : "Activate"
+                          true ? "Deactivate" : "Activate"
                         }`,
                         ItemIcon: <MdOutlineUpdateDisabled />,
-                        restaurantId: `${restaurant.restaurant_id}`,
+                        foodId: `${food.food_id}`,
                       },
                       {
-                        menuItem: "Food lists",
-                        ItemIcon: <GoListOrdered />,
-                        naviagte: "/food-by-restaurant",
+                        menuItem: "Edit record",
+                        ItemIcon: <FiEdit />,
+                        naviagte: "/food-by-restaurant/EditFood",
+                        foodId: `${food.food_id}`,
                       },
                       // {
                       //   menuItem: "Navigate user",

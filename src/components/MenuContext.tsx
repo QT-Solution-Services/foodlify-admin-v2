@@ -9,6 +9,7 @@ import { MenuContextProps } from "@/interfaces/App.interface";
 import useBlockRestaurant from "@/hooks/restaurants/useBlockRestaurant";
 import useBlockUser from "@/hooks/users/useBlockUser";
 import { useQueryClient } from "@tanstack/react-query";
+import useFoodByRestaurant from "@/hooks/food/useFoodByRestaurant";
 
 export default function MenuAction({ menuListValue }: any) {
   const router = useRouter();
@@ -16,6 +17,7 @@ export default function MenuAction({ menuListValue }: any) {
   const { blockRestaurant, unBlockRestaurant, isLoading } =
     useBlockRestaurant();
   const { blockUser, unBlockUser } = useBlockUser();
+  const { deActivateFood } = useFoodByRestaurant();
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -28,6 +30,7 @@ export default function MenuAction({ menuListValue }: any) {
   };
 
   function handleMeunApiRequests(lable: string, value: string) {
+    // restaurant
     if (lable === "blockRestaurant") {
       blockRestaurant(value);
     }
@@ -35,15 +38,24 @@ export default function MenuAction({ menuListValue }: any) {
       alert("unblock restaurant with id " + value);
       unBlockRestaurant(value);
     }
+
+    // user
     if (lable === "blockUser") {
       blockUser(value);
     }
     if (lable === "unBlockUser") {
       unBlockUser(value);
     }
+
+    // food DeactivateFood
+    if (lable === "DeactivateFood") {
+      alert("deactivate food with id " + value);
+      deActivateFood(value);
+    }
   }
 
   function handleMenuActions(listItem: MenuContextProps) {
+    // for enabling and disabling of food
     if (listItem.menuItem && listItem.menuItem === "Disabled") {
       listItem.restaurantId &&
         handleMeunApiRequests("blockRestaurant", listItem.restaurantId);
@@ -57,20 +69,38 @@ export default function MenuAction({ menuListValue }: any) {
         handleMeunApiRequests("unBlockUser", listItem.userName);
     }
 
-    // if menu item is not block || unblock is def a button or link
-    listItem.naviagte && router.push(listItem.naviagte);
-    // check if is navigating to restuarant food list
+    // for activating and deactivating of food
+    if (listItem.menuItem && listItem.menuItem === "Deactivate") {
+      listItem.foodId &&
+        handleMeunApiRequests("DeactivateFood", listItem.foodId);
+    }
+
+    // check if is navigating to restuarant food list or others
     if (listItem.naviagte === "/food-by-restaurant") {
       const currentQuery = { ...router.query };
 
       router.replace({
-        pathname: "/food-by-restaurant",
         query: {
           ...currentQuery,
           restaurantId: listItem.restaurantId,
           restaurantName: listItem.restaurantName,
         },
+        pathname: "/food-by-restaurant",
       });
+    } else if (listItem.naviagte === "/food-by-restaurant/EditFood") {
+      const currentQuery = { ...router.query };
+
+      router.replace({
+        query: {
+          ...currentQuery,
+          foodId: listItem.foodId,
+        },
+        pathname: "food-by-restaurant/EditFood",
+      });
+    } else {
+      // if menu item is not block || unblock is def a button or link
+      // default navigation behaviour
+      listItem.naviagte && router.push(listItem.naviagte);
     }
   }
   return (

@@ -1,7 +1,5 @@
 import AppLayout from "@/components/layouts/AppLayout";
 import React, { useEffect, useState } from "react";
-import RestaurantTableOperations from "./RestaurantTableOperations";
-import RestaurantTable from "./RestaurantTable";
 import useRestaurant from "@/hooks/restaurants/useRestaurant";
 import { Spinner } from "@/components/Button";
 import { formatResturantData } from "@/utils/Helper";
@@ -22,7 +20,6 @@ function Index() {
   } = useFoodByRestaurant();
 
   if (isLoading) return <Spinner />;
-  console.log("foodlist ", foodLists);
 
   return (
     <AppLayout>
@@ -31,16 +28,21 @@ function Index() {
           <h2 className="  text-3xl font-medium capitalize text-primary">
             All Food by {router.query.restaurantName}
           </h2>
+          <button
+            onClick={() => router.push("restaurant")}
+            className="text-primary"
+          >
+            &larr; Back
+          </button>
         </div>
 
         {!foodLists ? (
           <p>No Food found</p>
         ) : (
-          <p>Food list</p>
-          //   <div>
-          //     <FoodTable foods={foodLists} />
-          //     {<Pagination totalPage={total_pages} lastPage={is_last_page} />}
-          //   </div>
+          <div>
+            <FoodTable foods={foodLists} />
+            {<Pagination totalPage={total_pages} lastPage={is_last_page} />}
+          </div>
         )}
       </>
     </AppLayout>

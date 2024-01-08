@@ -10,14 +10,14 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: false,
   },
-  async rewrites() {
-    return [
-      {
-        source: "/api/:path*",
-        destination: `${resolvedBaseUrl}/api/v1/:path*`,
-      },
-    ];
-  },
+  // async rewrites() {
+  //   return [
+  //     {
+  //       source: "/api/:path*",
+  //       destination: `${resolvedBaseUrl}/api/v1/:path*`,
+  //     },
+  //   ];
+  // },
 };
 
 module.exports = nextConfig;

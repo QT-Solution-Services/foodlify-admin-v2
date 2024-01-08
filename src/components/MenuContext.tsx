@@ -79,7 +79,7 @@ export default function MenuAction({ menuListValue }: any) {
     if (listItem.naviagte === "/food-by-restaurant") {
       const currentQuery = { ...router.query };
 
-      router.replace({
+      router.push({
         query: {
           ...currentQuery,
           restaurantId: listItem.restaurantId,
@@ -90,7 +90,7 @@ export default function MenuAction({ menuListValue }: any) {
     } else if (listItem.naviagte === "/food-by-restaurant/EditFood") {
       const currentQuery = { ...router.query };
 
-      router.replace({
+      router.push({
         query: {
           ...currentQuery,
           foodId: listItem.foodId,

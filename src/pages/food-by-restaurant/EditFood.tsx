@@ -8,7 +8,7 @@ import React, { useContext, useState } from "react";
 
 function EditFood() {
   const router = useRouter();
-  const [price, setPrice] = useState("");
+  const [price, setPrice] = useState(0);
   const [name, setName] = useState("");
   const foodId = router.query.foodId;
 
@@ -21,7 +21,7 @@ function EditFood() {
   function handleChangePrice(e: any) {
     e.preventDefault();
 
-    if (!isNaN(price) && foodId) {
+    if (!isNaN(price) && foodId && price > 0) {
       updateFoodPrice({ foodId, price });
     } else {
       alert("Enter a valid number");

@@ -59,6 +59,19 @@ export default function MenuAction({ menuListValue }: any) {
 
     // if menu item is not block || unblock is def a button or link
     listItem.naviagte && router.push(listItem.naviagte);
+    // check if is navigating to restuarant food list
+    if (listItem.naviagte === "/food-by-restaurant") {
+      const currentQuery = { ...router.query };
+
+      router.replace({
+        pathname: "/food-by-restaurant",
+        query: {
+          ...currentQuery,
+          restaurantId: listItem.restaurantId,
+          restaurantName: listItem.restaurantName,
+        },
+      });
+    }
   }
   return (
     <div>

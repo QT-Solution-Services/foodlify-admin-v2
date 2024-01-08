@@ -46,3 +46,7 @@ export const unBlockUserRoute = (username: string) =>
 
 export const removeOrderItem = (orderId: string, itemId: string) =>
   `/api/admin/remove_order_item/${orderId}/${itemId}`;
+
+// food by restuarnt
+
+export const foodByRestaurantRoute = `/api/v1/public/food_by_restaurant`;

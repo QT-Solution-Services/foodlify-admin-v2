@@ -25,6 +25,7 @@ export interface MenuContextProps {
   ItemIcon: React.ReactNode;
   naviagte?: string;
   restaurantId: string;
+  restaurantName: string;
   userName: string;
 }
 

@@ -21,7 +21,7 @@ import { MdOutlineUpdateDisabled } from "react-icons/md";
 //   },
 // ];
 
-function RestaurantTable({ restaurants }: any) {
+function FoodTable({ restaurants }: any) {
   if (!restaurants || restaurants.length === 0) return <p>No result found</p>;
 
   return (
@@ -100,8 +100,6 @@ function RestaurantTable({ restaurants }: any) {
                         menuItem: "Food lists",
                         ItemIcon: <GoListOrdered />,
                         naviagte: "/food-by-restaurant",
-                        restaurantId: `${restaurant.restaurant_id}`,
-                        restaurantName: `${restaurant.name}`,
                       },
                       // {
                       //   menuItem: "Navigate user",
@@ -120,4 +118,4 @@ function RestaurantTable({ restaurants }: any) {
   );
 }
 
-export default RestaurantTable;
+export default FoodTable;

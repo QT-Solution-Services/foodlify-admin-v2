@@ -8,6 +8,7 @@ import { useRouter } from "next/router";
 import SearchBox from "@/components/SearchBox";
 import FoodTable from "./FoodTable";
 import useFoodByRestaurant from "@/hooks/food/useFoodByRestaurant";
+import FoodByRestaurantTableOperation from "./FoodByRestaurantTableOperation";
 
 function Index() {
   const router = useRouter();
@@ -21,6 +22,17 @@ function Index() {
 
   if (isLoading) return <Spinner />;
 
+  let filterFoodByRestaurnat;
+  if (router.query.filterField === "all") filterFoodByRestaurnat = foodLists;
+  if (router.query.filterField === "ACTIVE")
+    filterFoodByRestaurnat = foodLists.filter(
+      (food: any) => food.status === true,
+    );
+  if (router.query.filterField === "INACTIVE")
+    filterFoodByRestaurnat = foodLists.filter(
+      (food: any) => food.status === false,
+    );
+
   return (
     <AppLayout>
       <>
@@ -28,6 +40,7 @@ function Index() {
           <h2 className="  text-3xl font-medium capitalize text-primary">
             All Food by {router.query.restaurantName}
           </h2>
+          <FoodByRestaurantTableOperation />
           <button
             onClick={() => router.push("restaurant")}
             className="text-primary"
@@ -40,7 +53,7 @@ function Index() {
           <p>No Food found</p>
         ) : (
           <div>
-            <FoodTable foods={foodLists} />
+            <FoodTable foods={filterFoodByRestaurnat} />
             {<Pagination totalPage={total_pages} lastPage={is_last_page} />}
           </div>
         )}

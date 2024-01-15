@@ -41,7 +41,7 @@ function FoodTable({ foods }: any) {
                 Description
               </TableCell>
               <TableCell align="center" sx={{ fontWeight: 800, fontSize: 18 }}>
-                isKitchen
+                status
               </TableCell>
               <TableCell align="center" sx={{ fontWeight: 800, fontSize: 18 }}>
                 &nbsp;
@@ -72,15 +72,14 @@ function FoodTable({ foods }: any) {
                 <TableCell align="center">{food.price}</TableCell>
                 <TableCell align="center">{food.description}</TableCell>
                 <TableCell align="center">
-                  {food.forKitchen ? "True" : "False"}
+                  {food.status ? "Active" : "Inactive"}
                 </TableCell>
                 <TableCell align="center">
                   <MenuAction
                     menuListValue={[
                       {
                         menuItem: `${
-                          // food.status === true ? "Deactivate" : "Activate"
-                          true ? "Deactivate" : "Activate"
+                          food.status === true ? "Deactivate" : "Activate"
                         }`,
                         ItemIcon: <MdOutlineUpdateDisabled />,
                         foodId: `${food.food_id}`,

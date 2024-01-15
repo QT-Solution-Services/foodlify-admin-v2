@@ -50,9 +50,13 @@ export const removeOrderItem = (orderId: string, itemId: string) =>
 
 // food by restuarnt
 export const foodByRestaurantRoute = `${baseUrl}/api/v1/public/food_by_restaurant`;
+export const restaurantFoodsRoute = `${baseUrl}/api/v1/admin/food_by_restaurant`;
 
 export const deactiavteFoodRoute = (foodId: string) =>
   `${baseUrl}/api/v1/admin/deactivate/${foodId}`;
+
+export const actiavteFoodRoute = (foodId: string) =>
+  `${baseUrl}/api/v1/admin/activate/${foodId}`;
 
 export const updateFoodPriceRoute = (foodId: string, price: string) =>
   `${baseUrl}/api/v1/admin/update_price/${foodId}/${price}`;

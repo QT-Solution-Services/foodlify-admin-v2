@@ -17,7 +17,7 @@ export default function MenuAction({ menuListValue }: any) {
   const { blockRestaurant, unBlockRestaurant, isLoading } =
     useBlockRestaurant();
   const { blockUser, unBlockUser } = useBlockUser();
-  const { deActivateFood } = useFoodByRestaurant();
+  const { deActivateFood, activateFood } = useFoodByRestaurant();
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -52,6 +52,9 @@ export default function MenuAction({ menuListValue }: any) {
       alert("deactivate food with id " + value);
       deActivateFood(value);
     }
+    if (lable === "ActivateFood") {
+      activateFood(value);
+    }
   }
 
   function handleMenuActions(listItem: MenuContextProps) {
@@ -73,6 +76,9 @@ export default function MenuAction({ menuListValue }: any) {
     if (listItem.menuItem && listItem.menuItem === "Deactivate") {
       listItem.foodId &&
         handleMeunApiRequests("DeactivateFood", listItem.foodId);
+    }
+    if (listItem.menuItem && listItem.menuItem === "Activate") {
+      listItem.foodId && handleMeunApiRequests("ActivateFood", listItem.foodId);
     }
 
     // check if is navigating to restuarant food list or others
